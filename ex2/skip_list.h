@@ -1,8 +1,11 @@
+#pragma once
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stddef.h>
-
+#include <errno.h>
+#include <time.h>
+#include <stdbool.h>
 
 #define MAX_HEIGHT 20
 struct Node {
@@ -20,3 +23,6 @@ struct _SkipList {
   int (*compare)(const void*,const void*);
   void (*free)(void *); // free function for the elements in the list
 };
+
+//method prototypes
+void *search_skip_list(struct _SkipList *list, void *I);

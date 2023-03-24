@@ -43,7 +43,10 @@ struct Node *create_node(void *I,int level,size_t size)
 	if(new->next == NULL) return NULL;
 	return new;
 }
-void *new_skiplist(struct _SkipList **list, size_t max_height, int (*compare)(const void *, const void *))
+
+//empty skip list
+//FIXME
+void new_skiplist(struct _SkipList **list, size_t max_height, int (*compare)(const void *, const void *))
 {
 	struct _SkipList *listCp;
 	list = &listCp;
@@ -52,7 +55,6 @@ void *new_skiplist(struct _SkipList **list, size_t max_height, int (*compare)(co
 	listCp->max_level = 1;
 	listCp->compare = compare_string;
 	listCp->size = 0;
-	return listCp;
 }
 
 void clear_skiplist(struct _SkipList **list)
