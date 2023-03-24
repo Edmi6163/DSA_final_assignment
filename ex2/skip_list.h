@@ -1,5 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <stddef.h>
+
 
 #define MAX_HEIGHT 20
 struct Node {
