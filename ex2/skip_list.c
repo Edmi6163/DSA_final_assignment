@@ -49,12 +49,13 @@ struct Node *create_node(void *I,int level,size_t size)
 void new_skiplist(struct _SkipList **list, size_t max_height, int (*compare)(const void *, const void *))
 {
 	struct _SkipList *listCp;
-	list = &listCp;
 	listCp = (struct _SkipList *)malloc(sizeof(struct _SkipList));
 	listCp->head = create_node(NULL, 0, random_level());
 	listCp->max_level = 1;
 	listCp->compare = compare_string;
 	listCp->size = 0;
+	 
+	list = &listCp;
 }
 
 void clear_skiplist(struct _SkipList **list)
