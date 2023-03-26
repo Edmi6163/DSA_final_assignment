@@ -23,29 +23,32 @@ int random_level()
 	return lvl;
 }
 
-struct Node *create_node(void *I,int level,size_t size)
+struct Node *create_node(void *I, int level, size_t size)
 {
 	struct Node *new = malloc(sizeof(struct Node));
-	if(new == NULL) return NULL;
+	if (new == NULL)
+		return NULL;
 
-	if(size==0)
+	if (size == 0)
 	{
 		new->item = NULL;
 	}
 	else
 	{
 		new->item = malloc(size);
-		if(new->item == NULL) return NULL;
-		memcpy(new->item,I,size);
+		if (new->item == NULL)
+			return NULL;
+		memcpy(new->item, I, size);
 	}
 	new->level = level;
-	new->next = calloc(level,sizeof(void*));
-	if(new->next == NULL) return NULL;
+	new->next = calloc(level, sizeof(void *));
+	if (new->next == NULL)
+		return NULL;
 	return new;
 }
 
-//empty skip list
-//FIXME
+// empty skip list
+// FIXME
 void new_skiplist(struct _SkipList **list, size_t max_height, int (*compare)(const void *, const void *))
 {
 	struct _SkipList *listCp;
@@ -54,7 +57,7 @@ void new_skiplist(struct _SkipList **list, size_t max_height, int (*compare)(con
 	listCp->max_level = 1;
 	listCp->compare = compare_string;
 	listCp->size = 0;
-	 
+
 	list = &listCp;
 }
 
@@ -112,7 +115,7 @@ void insert_skiplist(struct _SkipList *list, void *item)
 	}
 }
 
-void *search_skip_list(struct _SkipList *list, void *I)
+const void *search_skip_list(struct _SkipList *list, void *I)
 {
 	struct Node *x = list->head;
 
@@ -130,4 +133,21 @@ void *search_skip_list(struct _SkipList *list, void *I)
 		return NULL;
 	else
 		return x->item;
+}
+
+struct _SkipList *create_skiplist(int (*compare)(const void *, const void *), void (*free)(void *), size_t size)
+{
+	struct _SkipList *new = malloc(sizeof(struct _SkipList));
+	if (new == NULL)
+		return NULL;
+
+	struct Node *sentinel = create_node(NULL, MAX_HEIGHT, 0);
+	if (sentinel == NULL)
+		return NULL;
+	new->head = sentinel;
+	new->free = free;
+	new->compare = compare;
+	new->max_level = 1;
+	new->size = size;
+	return new;
 }
