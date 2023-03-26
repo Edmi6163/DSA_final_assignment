@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS= -Wall -g -D_GNU_SOURCE
+CFLAGS= -Wall -g 
 ARGS= input/dictionary.txt  input/correctme.txt
 
 all: libs obj test
