@@ -9,6 +9,7 @@ libs:
 	$(CC) $(CFLAGS)  ex2/skip_list.c ex2/main.c -o ex2/build/main_ex2
 run:
 	./ex2/build/main_ex2 $(ARGS)
+# TODO remember to put back arguments
 
 debug:
 	gdb ./ex2/build/main_ex2 $(ARGS)

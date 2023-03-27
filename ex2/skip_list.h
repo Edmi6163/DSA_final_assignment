@@ -26,7 +26,7 @@ struct _SkipList {
 
 //method prototypes
 const void *search_skip_list(struct _SkipList *list, void *I);
-struct _SkipList *create_skiplsit(int (*compare)(const void *,const void *), void (*free)(void *),size_t size);
+struct _SkipList *create_skiplist(int (*compare)(const void *,const void *), void (*free)(void *),size_t size);
 void insert_skiplist(struct _SkipList *list,void *item);
 void clear_skiplist(struct _SkipList **list);
 int compare_string(const void* a, const void* b);
