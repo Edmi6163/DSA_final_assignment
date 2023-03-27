@@ -17,7 +17,7 @@ int get_phrase(char *phrase[], FILE *fp1)
 	}
 	while (((c = fgetc(fp1) != EOF) && words < MAXW))
 	{
-		if (c < 'A' || (c > 'Z' && c < 'a' || c > 'z'))
+		if (c < 'A' || (c > 'Z' && c < 'a' )|| c > 'z')
 		{
 			if (!con)
 				continue; // makes fgetc loop until it finds a letter
@@ -39,9 +39,10 @@ int get_phrase(char *phrase[], FILE *fp1)
 			con = true;
 		}
 	}
+	return words;
 }
 
-void find_errors(const char *dictfile, const char *textfile, size_t max_height)
+void find_errors(const char *dictfile, const char *textfile,const size_t max_height,struct _SkipList *list)
 {
 
 	char *phrase[MAXC] = {0};
@@ -69,7 +70,7 @@ void find_errors(const char *dictfile, const char *textfile, size_t max_height)
 
 	clock_t time_end = clock();
 	double time_spent = (double)(time_end - time_start) / CLOCKS_PER_SEC;
-	printf("\e[0;33mtime spent with MAX_EIGHT value: %f\n\e[0m", time_spent);
+	printf("\e[0;33mtime spent with max_height value: %f\n\e[0m", time_spent);
 }
 
 void reading_dictionary(FILE *fp, struct _SkipList *list)
@@ -98,12 +99,12 @@ int main(int argc, char **argv)
 	printf("argv 2 is: %s\n ", argv[2]);
 	FILE *fp, *fp1;
 
-	struct _SkipList *list = create_skiplist(compare_string, free_string, sizeof(char *)); // TODO write this function
+	struct _SkipList *list = create_skiplist(compare_string, free_string, sizeof(char *));
 	printf("opening files.... \n");
 	fp = fopen(argv[1], "r");
 	fp1 = fopen(argv[2], "r");
 
-	if (*argv[1] < 2)
+	if (&argv[1] < 2)
 		printf("not enough argument passed \n");
 
 	if (!fp && !fp1)
@@ -118,9 +119,9 @@ int main(int argc, char **argv)
 	printf("\n----------------\n");
 	printf("\n----------------\n");
 
-	find_errors(fp, fp1, list->max_height);
+	find_errors(fp, fp1, list->max_height,list);
 	fclose(fp);
 	fclose(fp1);
-	clear_skiplist(&list); // TODO
+	clear_skiplist(&list);
 	return 0;
 }

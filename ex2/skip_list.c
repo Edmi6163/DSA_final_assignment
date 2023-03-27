@@ -15,6 +15,11 @@ int compare_string(const void *a, const void *b)
 	return 1;
 }
 
+void free_string(void *a)
+{
+	free(*(char **)a);
+}
+
 int random_level()
 {
 	int lvl = 1;
@@ -53,7 +58,7 @@ void new_skiplist(struct _SkipList **list, size_t max_height, int (*compare)(con
 {
 	struct _SkipList *listCp;
 	listCp = (struct _SkipList *)malloc(sizeof(struct _SkipList));
-	listCp->head = create_node(NULL, 0, random_level());
+	listCp->head = create_node(NULL, 0, random_level(listCp));
 	listCp->max_level = 1;
 	listCp->compare = compare_string;
 	listCp->size = 0;
@@ -83,7 +88,7 @@ void clear_skiplist(struct _SkipList **list)
 
 void insert_skiplist(struct _SkipList *list, void *item)
 {
-	struct Node *new = create_node(item, random_level(), list->size);
+	struct Node *new = create_node(item, random_level(list), list->size);
 
 	if (new == NULL)
 	{
