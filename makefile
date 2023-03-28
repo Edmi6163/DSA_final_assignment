@@ -14,5 +14,8 @@ run:
 debug:
 	gdb ./ex2/build/main_ex2 $(ARGS)
 
+test:
+	$(CC) $(CFLAGS) ex2/skip_list.c skip_list_test.c -o test 
+
 clean:
 	rm -rf ex2/build
