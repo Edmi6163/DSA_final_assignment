@@ -52,38 +52,44 @@ struct Node *create_node(void *I, int level, size_t size)
 	return new;
 }
 
-// empty skip list
-// FIXME
+// create a new empty skip list
 void new_skiplist(struct _SkipList **list, size_t max_height, int (*compare)(const void *, const void *))
 {
-	struct _SkipList *listCp;
-	listCp = (struct _SkipList *)malloc(sizeof(struct _SkipList));
-	listCp->head = create_node(NULL, 0, random_level(listCp));
-	listCp->max_level = 1;
-	listCp->compare = compare_string;
-	listCp->size = 0;
-
-	list = &listCp;
+	struct _SkipList *new = malloc(sizeof(struct _SkipList));
+	if (new == NULL)
+	{
+		printf("Error allocating memory");
+		exit(EXIT_FAILURE);
+	}
+	new->head = create_node(NULL, max_height, 0);
+	if (new->head == NULL)
+	{
+		printf("Error allocating memory");
+		exit(EXIT_FAILURE);
+	}
+	new->max_level = 1;
+	new->size = 0;
+	new->compare = compare;
+	new->free = NULL;
+	*list = new;
 }
 
+//delete skip list
 void clear_skiplist(struct _SkipList **list)
 {
-	struct _SkipList *listCp;
-	struct Node *curr = NULL;
-	list = &listCp;
-	while (listCp->head != NULL)
+	struct Node *x = (*list)->head;
+	struct Node *y = NULL;
+	while (x != NULL)
 	{
-		curr = listCp->head;
-		listCp->head = curr->next[0];
-
-		if (curr->item != NULL && listCp->free != NULL)
-			listCp->free(curr->item);
-
-		if (curr->item != NULL)
-			free(curr->item);
-		free(curr->next);
-		free(curr);
+		y = x->next[0];
+		if ((*list)->free != NULL)
+			(*list)->free(x->item);
+		free(x->next);
+		free(x);
+		x = y;
 	}
+	free(*list);
+	*list = NULL;
 }
 
 void insert_skiplist(struct _SkipList *list, void *item)
