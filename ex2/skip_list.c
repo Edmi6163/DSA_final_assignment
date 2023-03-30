@@ -17,6 +17,7 @@ int compare_string(const void *a, const void *b)
 
 void free_string(void *a)
 {
+	printf("string to free: %p", a);
 	free(*(char **)a);
 }
 
@@ -67,7 +68,7 @@ void new_skiplist(struct _SkipList **list, size_t max_height, int (*compare)(con
 		printf("Error allocating memory");
 		exit(EXIT_FAILURE);
 	}
-	new->max_level = 1;
+	new->max_level = random_level();
 	new->size = 0;
 	new->compare = compare;
 	new->free = NULL;
@@ -94,7 +95,7 @@ void clear_skiplist(struct _SkipList **list)
 
 void insert_skiplist(struct _SkipList *list, void *item)
 {
-	struct Node *new = create_node(item, random_level(list), list->size);
+	struct Node *new = create_node(item, random_level(), list->size);
 
 	if (new == NULL)
 	{
@@ -115,7 +116,7 @@ void insert_skiplist(struct _SkipList *list, void *item)
 			{
 				new->next[k] = x->next[k];
 				x->next[k] = x->next[k];
-				printf("inserting %s\n", *(char **)x->next[k]->item);
+				// printf("inserting %s\n", *(char **)x->next[k]->item); //FIXME seg fault here 'cause elem is null
 			}
 			k--;
 		}
@@ -152,7 +153,7 @@ struct _SkipList *create_skiplist(int (*compare)(const void *, const void *), vo
 	if (new == NULL)
 		return NULL;
 
-	struct Node *sentinel = create_node(NULL, MAX_HEIGHT, 0);
+	struct Node *sentinel = create_node(NULL, new->max_height, 0);
 	if (sentinel == NULL)
 		return NULL;
 	new->head = sentinel;
