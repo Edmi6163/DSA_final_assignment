@@ -1,8 +1,15 @@
 CC = gcc
 CFLAGS = -Wall -g
+ARGS = data/records.csv data/sorted.csv
 
-main:
-	$(CC) $(CFLAGS) ex1/main.c -o ex1/build/main_ex1
+libs:
+	$(CC) $(CFLAGS) ex1/main.c ex1/csvReader.c -o build/main_ex1
 
 run:
-	./ex1/build/main_ex1 data/records.csv data/sorted.csv
+	./build/main_ex1 $(ARGS)
+
+dump:
+	./build/main_ex1 $(ARGS) >> log.log
+clean:
+	rm log.log
+	rm -r build/*

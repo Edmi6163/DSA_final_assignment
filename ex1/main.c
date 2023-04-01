@@ -1,14 +1,15 @@
 #include "common.h"
 
-
-int main(int argc, char const *argv[])
+int main(int argc, const char *argv[])
 {
-  struct Record *const array = malloc(sizeof(struct Records));
-  if(array == NULL && atoi(argv[2])>2)
+  int size = n_row(argv[1]);
+  struct Records *array = calloc(size, sizeof(struct Records));
+  if (array == NULL)
   {
     printf("Error allocating memory");
-    exit(1);
+    exit(EXIT_FAILURE);
   }
-  create_array(argv[1],array,argv[2]);
+  printf("creating array\n");
+  create_array(argv[1], array, size);
   return 0;
 }
