@@ -95,8 +95,8 @@ void clear_skiplist(struct _SkipList **list)
 
 void insert_skiplist(struct _SkipList *list, void *item)
 {
+	assert(list != NULL);	
 	struct Node *new = create_node(item, random_level(), list->size);
-
 	if (new == NULL)
 	{
 		printf("Error allocating memory");
@@ -108,15 +108,18 @@ void insert_skiplist(struct _SkipList *list, void *item)
 
 	struct Node *x = list->head;
 
+
 	for (int k = list->max_level - 1; k >= 0;)
 	{
-		if (x->next[k] == NULL || (list->compare(item, x->next[k]->item) < 0))
+		if ((x->next[k] == NULL) || (list->compare(item, x->next[k]->item) < 0))
 		{
 			if (k < new->level)
 			{
 				new->next[k] = x->next[k];
 				x->next[k] = x->next[k];
-				// printf("inserting %s\n", *(char **)x->next[k]->item); //FIXME seg fault here 'cause elem is null
+
+				printf("inserting item %s\n", *(char **)item); 
+				printf("inserting new->nex[k] %s\n", *(char **)new->next[k]);
 			}
 			k--;
 		}

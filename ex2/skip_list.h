@@ -7,6 +7,7 @@
 #include <time.h>
 #include <stdbool.h>
 #include <unistd.h>
+#include <assert.h>
 
 #define MAX_HEIGHT 10
 struct Node {
