@@ -16,3 +16,5 @@ struct Records
 
 void create_array(const char* file_path,struct Records *array,int size);
 int n_row(const char *file_path);
+void insertion_sort(void *array,size_t size);
+void merge_sort(void *array,int left,int k);

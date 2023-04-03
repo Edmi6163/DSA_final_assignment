@@ -11,5 +11,7 @@ int main(int argc, const char *argv[])
   }
   printf("creating array\n");
   create_array(argv[1], array, size);
+  //question for the user
+
   return 0;
 }
