@@ -117,8 +117,6 @@ void insert_skiplist(struct _SkipList *list, void *item)
 			{
 				new->next[k] = x->next[k];
 				x->next[k] = x->next[k];
-
-				printf("inserting item %s\n", *(char **)item); 
 				printf("inserting new->nex[k] %s\n", *(char **)new->next[k]);
 			}
 			k--;
@@ -148,21 +146,4 @@ const void *search_skip_list(struct _SkipList *list, void *I)
 		return NULL;
 	else
 		return x->item;
-}
-
-struct _SkipList *create_skiplist(int (*compare)(const void *, const void *), void (*free)(void *), size_t size)
-{
-	struct _SkipList *new = malloc(sizeof(struct _SkipList));
-	if (new == NULL)
-		return NULL;
-
-	struct Node *sentinel = create_node(NULL, new->max_height, 0);
-	if (sentinel == NULL)
-		return NULL;
-	new->head = sentinel;
-	new->free = free;
-	new->compare = compare;
-	new->max_level = 1;
-	new->size = size;
-	return new;
 }

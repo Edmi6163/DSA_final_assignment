@@ -3,7 +3,8 @@
 
 void test_search_char_skip_list()
 {
-  struct _SkipList *list = create_skiplist(compare_string,NULL,sizeof(char*));
+  struct _SkipList *list = NULL; 
+  new_skiplist(&list,10,compare_string);
 
   char actual[6] = {'l','f','a','s','d','c'};
 
@@ -25,7 +26,8 @@ void test_search_char_skip_list()
 
 void test_insert_stirng_skip_list()
 {
-  struct _SkipList *list = create_skiplist(compare_string,NULL,sizeof(char *));
+  struct _SkipList *list = NULL;
+  new_skiplist(&list,MAX_HEIGHT,compare_string);
   char *a = malloc(sizeof(char)*strlen("aaaa")+1);
   strcpy(a,"aaaa");
   char *b = malloc(sizeof(char)*strlen("sdadfff")+1);
