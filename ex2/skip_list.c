@@ -17,7 +17,7 @@ int compare_string(const void *a, const void *b)
 
 void free_string(void *a)
 {
-	printf("string to free: %p", a);
+	printf("string to free: %s", *(char**) a);
 	free(*(char **)a);
 }
 
@@ -32,6 +32,7 @@ int random_level()
 struct Node *create_node(void *I, int level, size_t size)
 {
 	struct Node *new = malloc(sizeof(struct Node));
+	printf("creating node with level %d\n", level);
 	if (new == NULL)
 		return NULL;
 
@@ -53,7 +54,9 @@ struct Node *create_node(void *I, int level, size_t size)
 	return new;
 }
 
-// create a new empty skip list
+/*
+ create a new empty skip list
+*/
 void new_skiplist(struct _SkipList **list, size_t max_height, int (*compare)(const void *, const void *))
 {
 	struct _SkipList *new = malloc(sizeof(struct _SkipList));
@@ -75,7 +78,9 @@ void new_skiplist(struct _SkipList **list, size_t max_height, int (*compare)(con
 	*list = new;
 }
 
-//delete skip list
+/*
+ delete skip list
+ */
 void clear_skiplist(struct _SkipList **list)
 {
 	struct Node *x = (*list)->head;
@@ -93,10 +98,16 @@ void clear_skiplist(struct _SkipList **list)
 	*list = NULL;
 }
 
+/*
+	insert item in skip list
+*/
 void insert_skiplist(struct _SkipList *list, void *item)
 {
 	assert(list != NULL);	
+	printf("[insert skip list]inserting %s\n", *(char **)item);
 	struct Node *new = create_node(item, random_level(), list->size);
+	printf("new node created with level %d\n", new->level);
+	printf("list->max_level %ld\n", list->max_level);
 	if (new == NULL)
 	{
 		printf("Error allocating memory");
@@ -116,8 +127,8 @@ void insert_skiplist(struct _SkipList *list, void *item)
 			if (k < new->level)
 			{
 				new->next[k] = x->next[k];
-				x->next[k] = x->next[k];
-				printf("inserting new->nex[k] %s\n", *(char **)new->next[k]);
+				x->next[k] = new;
+				// printf("inserting new->next[k] %s\n", *(char **)new->next[k]);
 			}
 			k--;
 		}
@@ -128,10 +139,13 @@ void insert_skiplist(struct _SkipList *list, void *item)
 	}
 }
 
+/*
+	search item in skip list
+*/
 const void *search_skip_list(struct _SkipList *list, void *I)
 {
 	struct Node *x = list->head;
-
+	printf("searching %s\n", *(char **)I); //TODO remove
 	for (int i = list->max_level - 1; i >= 0; i--)
 	{
 		while (x->next[i] != NULL && list->compare(x->next[i]->item, I) < 0)

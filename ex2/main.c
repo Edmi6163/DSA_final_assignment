@@ -9,6 +9,7 @@ int get_phrase(char *phrase[], const char *phrasefile)
 	char c;
 	int words = 0, chars = 0;
 	FILE *fp1 = fopen(phrasefile, "r");
+	printf("Reading phrase from file \x1b[33m%s\n\x1b[0m", phrasefile);
 	phrase[words] = calloc(MAXW, sizeof(char)); // first word need to be manually allocated
 	if (phrase[words] == NULL && MAXW > 0)
 	{
@@ -33,14 +34,14 @@ int get_phrase(char *phrase[], const char *phrasefile)
 		}
 		else
 		{
-			if (c > 'A' && c <= 'Z')
-				c += 32;
+			if (c > 'A' && c <= 'Z') c += 32;
 			phrase[words][chars++] = c;
 			con = true;
 		}
+		printf("word: %s", phrase[words]);
 	}
+	if(!con) free(phrase[words--]);
 	fclose(fp1);
-	printf("words in phrase %d", words);
 	return words;
 }
 
@@ -51,8 +52,9 @@ void reading_dictionary(const char *dictfile, struct _SkipList *list)
 	int words_count = 0;
 	FILE *fp = fopen(dictfile, "r");
 
-	printf("Loading dictionary from file \033[1m%s\n\033[22m\0337\033[5m", dictfile);
+	printf("Loading dictionary from file \x1b[33m%s\n\x1b[0m", dictfile);
 	TEST_ERROR
+	
 	for (int i = 0; fgets(buffer, sizeof(buffer), fp) != NULL; i++)
 	{
 		char *word = calloc(MAXW, sizeof(char));
@@ -73,7 +75,7 @@ void find_errors(const char *dictfile, const char *textfile, size_t max_height)
 {
 	struct _SkipList *list = NULL;
 	new_skiplist(&list, 10, compare_string);
-	printf("reading dictionary  %s\n", dictfile);
+	printf("reading dictionary -->  %s\n", dictfile);
 	reading_dictionary(dictfile, list);
 	char *phrase[MAXW];
 	int words = get_phrase(phrase, textfile);
@@ -90,11 +92,12 @@ int main(int argc, char **argv)
 {
 	// printf("argv 1 is: %s\n ", argv[1]);
 	// printf("argv 2 is: %s\n ", argv[2]);
+
 	const char *dict = "input/dictionary.txt";
 	const char *corr = "input/correctme.txt";
 
-	printf(":::dict path %s::: \n", dict); // TODO this need to be the arguments
-	printf(":::corr path %s::: \n", corr);
+	printf(":::>dict path %s<::: \n", dict); // TODO this need to be the arguments
+	printf(":::>corr path %s<::: \n", corr);
 	printf("looking for any errors .... \n");
 	/*
 		if (argc < 3)
