@@ -9,7 +9,11 @@ int get_phrase(char *phrase[], const char *phrasefile)
 	char c;
 	int words = 0, chars = 0;
 	FILE *fp1 = fopen(phrasefile, "r");
-	printf("Reading phrase from file \x1b[33m%s\n\x1b[0m", phrasefile);
+	if(fp1 == NULL)
+	{
+		printf("Error opening file \x1b[33m%s\n\x1b[0m", phrasefile);
+		exit(EXIT_FAILURE);
+	}
 	phrase[words] = calloc(MAXW, sizeof(char)); // first word need to be manually allocated
 	if (phrase[words] == NULL && MAXW > 0)
 	{
@@ -38,7 +42,7 @@ int get_phrase(char *phrase[], const char *phrasefile)
 			phrase[words][chars++] = c;
 			con = true;
 		}
-		printf("word: %s", phrase[words]);
+		printf("phrase[%d] = %s", words, phrase[words]);
 	}
 	if(!con) free(phrase[words--]);
 	fclose(fp1);
