@@ -1,4 +1,4 @@
-#pragma once 
+#pragma once
 #include <sys/types.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -16,5 +16,9 @@ struct Records
 
 void create_array(const char* file_path,struct Records *array,int size);
 int n_row(const char *file_path);
-void insertion_sort(void *array,size_t size);
-void merge_sort(void *array,int left,int k);
+void merge_binary_insertion_sort(void *base,size_t nitems,size_t size,size_t k,int (*compare)(const void*,const void *));
+void binary_insertion_sort(void *array,int left,int right,int (*compare)(const void*,const void *));
+
+int compare_string(const void *a, const void *b);
+int compare_int(const void *a, const void *b);
+int compare_double(const void *a, const void *b);
