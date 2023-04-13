@@ -25,13 +25,13 @@ int main(int argc, const char *argv[])
   switch (field)
   {
   case 1:
-    merge_binary_insertion_sort(array->field1, nitems,sizeof(struct Records), k, compare_string);
+    merge_binary_insertion_sort(array, nitems,sizeof(struct Records), k, compare_string);
     break;
   case 2:
-    merge_binary_insertion_sort(array->field2, nitems,sizeof(struct Records), k, compare_int);
+    merge_binary_insertion_sort(array, nitems,sizeof(struct Records), k, compare_int);
     break;
   case 3:
-    merge_binary_insertion_sort(array->field3, nitems,sizeof(struct Records), k, compare_double);
+    merge_binary_insertion_sort(array, nitems,sizeof(struct Records), k, compare_double);
     break;
   default:
     printf("Invalid field\n");

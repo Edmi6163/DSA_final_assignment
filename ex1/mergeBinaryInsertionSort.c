@@ -1,72 +1,74 @@
 #include "common.h"
-
-void merge(void *array, int left, int mid, int right, int (*compare)(const void *, const void *))
+void* swap(const void *a,const void *b,size_t size)
 {
-  int k;
+  void *tmp = malloc(size);
+  memcpy(tmp,a,size);
+  memcpy(a,b,size);
+  memcpy(b,tmp,size);
+  free(tmp);
+  return a;
+}
+
+//generic merge function
+void *merge(void *array, int left, int mid, int right, int (*compare)(const void *, const void *))
+{
+  assert(array != NULL && right > 0);
+
+  int i, j, k;
   int n1 = mid - left + 1;
   int n2 = right - mid;
-  int L[n1], R[n2];
-  for (int i = 0; i < n1; i++)
+  void *L = malloc(n1 * sizeof(int));
+  void *R = malloc(n2 * sizeof(int));
+  if (L == NULL || R == NULL)
   {
-    L[i] = array[left + i];
+    fprintf(stderr, "Error allocating memory");
+    exit(EXIT_FAILURE);
   }
-  for (int j = 0; j < n2; j++)
+  for (i = 0; i < n1; i++)
   {
-    R[j] = array[mid + 1 + j];
+    memcpy(L + i * sizeof(int), array + (left + i) * sizeof(int), sizeof(int));
   }
-  int i = 0;
-  int j = 0;
+  for (j = 0; j < n2; j++)
+  {
+    memcpy(R + j * sizeof(int), array + (mid + 1 + j) * sizeof(int), sizeof(int));
+  }
+  i = 0;
+  j = 0;
   k = left;
   while (i < n1 && j < n2)
   {
-    if (compare(&L[i], &R[j]) <= 0)
+    if (compare(L + i * sizeof(int), R + j * sizeof(int)) <= 0)
     {
-      array[k] = L[i];
+      memcpy(array + k * sizeof(int), L + i * sizeof(int), sizeof(int));
       i++;
     }
     else
     {
-      array[k] = R[j];
+      memcpy(array + k * sizeof(int), R + j * sizeof(int), sizeof(int));
       j++;
     }
     k++;
   }
-  while (i < n1)
-  {
-    array[k] = L[i];
-    i++;
-    k++;
-  }
-  while (j < n2)
-  {
-    array[k] = R[j];
-    j++;
-    k++;
-  }
 }
-void *binary_search(void *array, size_t size, int key, int (*compare)(const void *, const void *))
+void *binary_search(void *array, size_t right, size_t k, int (*compare)(const void *, const void *))
 {
-  assert(array != NULL && size > 0);
-  int left = 0;
-  int right = size - 1;
-  int mid = (left + right) / 2;
-  while (left <= right)
+  assert(array != NULL && right > 0);
+  size_t left = 0;
+  size_t mid = left + (right - left) / 2;
+  if(compare(array+mid+sizeof(int),&k)==0)
   {
-    if (compare(&key, &array[mid]) == 0)
-    {
-      return &array[mid];
-    }
-    else if (compare(&key, &array[mid]) < 0)
-    {
-      right = mid - 1;
-    }
-    else
-    {
-      left = mid + 1;
-    }
-    mid = (left + right) / 2;
+    return array+mid+sizeof(int);
+  } 
+  
+  else if(compare(array+mid+sizeof(int),&k)<0)
+  {
+    return binary_search(array,mid+1,k,compare);
   }
-  return mid;
+  else
+  {
+    return binary_search(array,mid-1,k,compare);
+  }
+  return array;
 }
 
 void merge_sort(void *array, int left, int right, int (*compare)(const void *, const void *))
@@ -84,20 +86,18 @@ void merge_sort(void *array, int left, int right, int (*compare)(const void *, c
 void binary_insertion_sort(void *array, int left,int right,int (*compare) (const void*,const void*))
 {
   assert(array != NULL && right > 0);
-  int i, j;
-  for (i = 1; i < right; i++)
-  {
-    int key = array[i];
-    int *pos = binary_search(array, right, key, compare);
-    if (pos != NULL)
+  int j;
+  size_t key;
+  void* key_loc;
+  for(int i = 0;i<right;i++) {
+    key_loc = binary_search(array,right,key,compare);
+    j=i;
+    while(j>right && compare(array+(j-1)*sizeof(int),&key_loc)>0)
     {
-      for (j = i - 1; j >= pos - array; j--)
-      {
-        array[j + 1] = array[j];
-      }
-      array[pos - array] = key;
+      swap(array+(i-1)*sizeof(int),array+i*sizeof(int),n_row);
     }
   }
+  
 }
 
 void merge_binary_insertion_sort(void *base, size_t nitems, size_t size, size_t k, int (*compare)(const void *, const void *))
