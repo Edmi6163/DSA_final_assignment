@@ -1,7 +1,7 @@
 #include "common.h"
 
 
-int n_row(const char *file_path)
+size_t n_row(const char *file_path)
 {
   FILE *fp = fopen(file_path,"r");
   char buffer[BUFF_SIZE];

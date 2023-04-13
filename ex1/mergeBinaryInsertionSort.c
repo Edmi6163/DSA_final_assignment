@@ -14,8 +14,8 @@ void merge(void *array, int left, int mid, int right, int (*compare)(const void 
   {
     R[j] = array[mid + 1 + j];
   }
-  i = 0;
-  j = 0;
+  int i = 0;
+  int j = 0;
   k = left;
   while (i < n1 && j < n2)
   {
@@ -66,12 +66,12 @@ void *binary_search(void *array, size_t size, int key, int (*compare)(const void
     }
     mid = (left + right) / 2;
   }
-  return NULL;
+  return mid;
 }
 
 void merge_sort(void *array, int left, int right, int (*compare)(const void *, const void *))
 {
-  assert(array != NULL && size > 0);
+  assert(array != NULL && right > 0);
   if (left < right)
   {
     int mid = (left + right) / 2;
@@ -81,14 +81,14 @@ void merge_sort(void *array, int left, int right, int (*compare)(const void *, c
   }
 }
 
-void binary_insertion_sort(void *array, size_t size)
+void binary_insertion_sort(void *array, int left,int right,int (*compare) (const void*,const void*))
 {
-  assert(array != NULL && size > 0);
+  assert(array != NULL && right > 0);
   int i, j;
-  for (i = 1; i < size; i++)
+  for (i = 1; i < right; i++)
   {
     int key = array[i];
-    int *pos = binary_search(array, size, key, compare);
+    int *pos = binary_search(array, right, key, compare);
     if (pos != NULL)
     {
       for (j = i - 1; j >= pos - array; j--)
@@ -103,21 +103,21 @@ void binary_insertion_sort(void *array, size_t size)
 void merge_binary_insertion_sort(void *base, size_t nitems, size_t size, size_t k, int (*compare)(const void *, const void *))
 {
   assert(base != NULL && size > 0);
-
+  int left = 0;
+  int right = nitems - 1;
   if (k <= 0)
   {
     merge_sort(base, 0, nitems - 1, compare);
   }
   else if (k >= nitems)
   {
-    binary_insertion_sort(base, nitems, compare);
+    binary_insertion_sort(base,left, right, compare);
   }
   else
   {
-    int i;
-    for (i = 0; i < nitems; i += k)
+    for (int i = 0; i < nitems; i += k)
     {
-      binary_insertion_sort(base + i, k, compare);
+      binary_insertion_sort(base + i, k,right, compare);
     }
     merge_sort(base, 0, nitems - 1, compare);
   }
