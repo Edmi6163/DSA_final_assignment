@@ -49,7 +49,9 @@ void *merge(void *array, int left, int mid, int right, int (*compare)(const void
     }
     k++;
   }
+  return array;
 }
+
 void *binary_search(void *array, size_t right, size_t k, int (*compare)(const void *, const void *))
 {
   assert(array != NULL && right > 0);
@@ -94,7 +96,7 @@ void binary_insertion_sort(void *array, int left,int right,int (*compare) (const
     j=i;
     while(j>right && compare(array+(j-1)*sizeof(int),&key_loc)>0)
     {
-      swap(array+(i-1)*sizeof(int),array+i*sizeof(int),n_row);
+      swap(array+(i-1)*sizeof(int),array+i*sizeof(int),sizeof(int));
     }
   }
   

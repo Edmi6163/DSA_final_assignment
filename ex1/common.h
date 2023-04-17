@@ -16,7 +16,7 @@ struct Records
   double field3;
 };
 
-void create_array(const char* file_path,struct Records *array,int size);
+void create_array(const char* file_path,struct Records *array,size_t size);
 size_t n_row(const char *file_path);
 void merge_binary_insertion_sort(void *base,size_t nitems,size_t size,size_t k,int (*compare)(const void*,const void *));
 void binary_insertion_sort(void *array,int left,int right,int (*compare)(const void*,const void *));
