@@ -34,7 +34,7 @@ void create_array(const char *file_path, struct Records *array, size_t size)
       exit(1);
     }
     sscanf(buffer, "%d,%63[^,],%d,%lf", &array[i].eId, array[i].field1, &array[i].field2, &array[i].field3); // https://stackoverflow.com/questions/55876376/how-to-use-sscanf-to-read-a-line-of-csv-with-continue-comma
-  printf("%d,%s,%d,%lf\n", &array[i].eId, array[i].field1, &array[i].field2, &array[i].field3);
+  
   }
   printf("\n*** done ***\n");
   fclose(fp);
