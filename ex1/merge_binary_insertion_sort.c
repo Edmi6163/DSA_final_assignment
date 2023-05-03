@@ -12,8 +12,6 @@ void* swap(const void *a,const void *b,size_t size)
 //generic merge function
 void *merge(void *array, int left, int mid, int right, int (*compare)(const void *, const void *))
 {
-  assert(array != NULL && right > 0);
-
   int i, j, k;
   int n1 = mid - left + 1;
   int n2 = right - mid;
@@ -54,7 +52,6 @@ void *merge(void *array, int left, int mid, int right, int (*compare)(const void
 
 void *binary_search(void *array, size_t right, size_t k, int (*compare)(const void *, const void *))
 {
-  assert(array != NULL && right > 0);
   size_t left = 0;
   size_t mid = left + (right - left) / 2;
   if(compare(array+mid+sizeof(int),&k)==0)
@@ -75,7 +72,6 @@ void *binary_search(void *array, size_t right, size_t k, int (*compare)(const vo
 
 void merge_sort(void *array, int left, int right, int (*compare)(const void *, const void *))
 {
-  assert(array != NULL && right > 0);
   if (left < right)
   {
     int mid = (left + right) / 2;
@@ -87,7 +83,6 @@ void merge_sort(void *array, int left, int right, int (*compare)(const void *, c
 
 void binary_insertion_sort(void *array, int left,int right,int (*compare) (const void*,const void*))
 {
-  assert(array != NULL && right > 0);
   int j;
   size_t key;
   void* key_loc;
@@ -104,7 +99,6 @@ void binary_insertion_sort(void *array, int left,int right,int (*compare) (const
 
 void merge_binary_insertion_sort(void *base, size_t nitems, size_t size, size_t k, int (*compare)(const void *, const void *))
 {
-  assert(base != NULL && size > 0);
   int left = 0;
   int right = nitems - 1;
   if (k <= 0)
