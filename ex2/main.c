@@ -3,49 +3,58 @@
 #define MAXW 64 // usually a words isn't longer than 64 characters
 #define MAXC 256
 
-int get_phrase(char *phrase[], const char *phrasefile)
+int get_phrase(const char *file_name, char *arr[64])
 {
-	bool con = false;
-	char c;
-	int words = 0, chars = 0;
-	FILE *fp1 = fopen(phrasefile, "r");
-	if(fp1 == NULL)
+	FILE *fp = fopen(file_name, "r");
+	if (fp == NULL)
 	{
-		printf("Error opening file \x1b[33m%s\n\x1b[0m", phrasefile);
+		printf("Error opening file\n");
 		exit(EXIT_FAILURE);
 	}
-	phrase[words] = calloc(MAXW, sizeof(char)); // first word need to be manually allocated
-	if (phrase[words] == NULL && MAXW > 0)
+
+	printf("Loading array from file \033[1m%s\033[22m \0337\033[5m...\n", file_name);
+
+	bool cont = false;
+	char c;
+	int words = 0, chars = 0;
+
+	arr[words] = calloc(MAXW, sizeof(char)); // first word needs to be manually alloc'd
+	if (arr[words] == NULL && MAXW > 0)
 	{
 		printf("Error allocating memory\n");
 		exit(EXIT_FAILURE);
 	}
-	while (((c = fgetc(fp1) != EOF) && words < MAXW))
+	while (((c = fgetc(fp)) != EOF) && words < MAXW)
 	{
 		if (c < 'A' || (c > 'Z' && c < 'a') || c > 'z')
 		{
-			if (!con)
+			if (!cont)
 				continue; // makes fgetc loop until it finds a letter
-			phrase[words][chars] = '\0';
+
+			arr[words][chars] = '\0';
 			chars = 0;
-			phrase[++words] = calloc(MAXW, sizeof(char));
-			if (phrase[words] == NULL && MAXW > 0)
+			arr[++words] = calloc(MAXW, sizeof(char));
+			if (arr[words] == NULL && MAXW > 0)
 			{
 				printf("Error allocating memory\n");
 				exit(EXIT_FAILURE);
 			}
-			con = false;
+			cont = false;
 		}
 		else
 		{
-			if (c > 'A' && c <= 'Z') c += 32;
-			phrase[words][chars++] = c;
-			con = true;
+			if (c >= 'A' && c <= 'Z')
+				c += 32; // lowercase
+			arr[words][chars++] = c;
+			cont = true;
 		}
-		printf("phrase[%d] = %s", words, phrase[words]);
 	}
-	if(!con) free(phrase[words--]);
-	fclose(fp1);
+	printf("\033[25m\0338\033[32mdone\033[0m\n");
+
+	if (!cont)
+		free(arr[words--]); // fixes case in which while loop thinks there's a word to be read but there's only random chars
+
+	fclose(fp);
 	return words;
 }
 
@@ -58,7 +67,7 @@ void reading_dictionary(const char *dictfile, struct _SkipList *list)
 
 	printf("Loading dictionary from file \x1b[33m%s\n\x1b[0m", dictfile);
 	TEST_ERROR
-	
+
 	for (int i = 0; fgets(buffer, sizeof(buffer), fp) != NULL; i++)
 	{
 		char *word = calloc(MAXW, sizeof(char));
@@ -68,7 +77,7 @@ void reading_dictionary(const char *dictfile, struct _SkipList *list)
 			exit(EXIT_FAILURE);
 		}
 		sscanf(buffer, "%s", word);
-		insert_skiplist(list, &word);
+		insert_skiplist(list, word);
 		words_count++;
 	}
 	printf("\n completed dictionary \n");
@@ -79,38 +88,35 @@ void find_errors(const char *dictfile, const char *textfile, size_t max_height)
 {
 	struct _SkipList *list = NULL;
 	new_skiplist(&list, 10, compare_string);
-	printf("reading dictionary -->  %s\n", dictfile);
+	printf("reading dictionary from file  %s\n", dictfile);
 	reading_dictionary(dictfile, list);
-	char *phrase[MAXW];
-	int words = get_phrase(phrase, textfile);
+	char *phrase[MAXW] = {0};
+	int words = get_phrase(textfile, phrase);
+	printf("words amount is %d\n", words);
+
 	for (int i = 0; i < words; i++)
 	{
+		printf("checking word %s\n", phrase[i]);
 		if (search_skip_list(list, &phrase[i]) == NULL)
 			printf("%s ", phrase[i]);
 	}
+
 	clear_skiplist(&list);
 	printf("\n");
 }
 
 int main(int argc, char **argv)
 {
-	// printf("argv 1 is: %s\n ", argv[1]);
-	// printf("argv 2 is: %s\n ", argv[2]);
+	const char *dict = argv[1];
+	const char *corr = argv[2];
 
-	const char *dict = "input/dictionary.txt";
-	const char *corr = "input/correctme.txt";
-
-	printf(":::>dict path %s<::: \n", dict); // TODO this need to be the arguments
+	printf(":::>dict path %s<::: \n", dict);
 	printf(":::>corr path %s<::: \n", corr);
-	printf("looking for any errors .... \n");
-	/*
-		if (argc < 3)
+
+	if (argc < 3)
 		printf("not enough argument passed \n");
-	*/
 	TEST_ERROR
 	find_errors(dict, corr, 10);
-	printf("\n----------------\n");
-	printf("\n----------------\n");
-
+	printf("looking for any errors .... \n");
 	return 0;
 }

@@ -1,6 +1,6 @@
 #include "skip_list.h"
 
-int compare_string(const void *a, const void *b)
+int compare_string(const void *a,const void *b)
 {
 	if (a != NULL && b != NULL)
 	{
@@ -17,7 +17,7 @@ int compare_string(const void *a, const void *b)
 
 void free_string(void *a)
 {
-	printf("string to free: %s", *(char**) a);
+	printf("string to free: %s", *(char **)a);
 	free(*(char **)a);
 }
 
@@ -57,7 +57,7 @@ struct Node *create_node(void *I, int level, size_t size)
 /*
  create a new empty skip list
 */
-void new_skiplist(struct _SkipList **list, size_t max_height, int (*compare)(const void *, const void *))
+void new_skiplist(struct _SkipList **list, size_t max_height, int (*compare)(const void *,const void *))
 {
 	struct _SkipList *new = malloc(sizeof(struct _SkipList));
 	if (new == NULL)
@@ -100,14 +100,15 @@ void clear_skiplist(struct _SkipList **list)
 
 /*
 	insert item in skip list
+	TODO:  not working :/
 */
 void insert_skiplist(struct _SkipList *list, void *item)
 {
-	assert(list != NULL);	
-	printf("[insert skip list]inserting %s\n", *(char **)item);
+	assert(list != NULL);
 	struct Node *new = create_node(item, random_level(), list->size);
-	printf("new node created with level %d\n", new->level);
+	// printf("new node created with level %d\n", new->level);
 	printf("list->max_level %ld\n", list->max_level);
+
 	if (new == NULL)
 	{
 		printf("Error allocating memory");
@@ -119,8 +120,8 @@ void insert_skiplist(struct _SkipList *list, void *item)
 
 	struct Node *x = list->head;
 
-
-	for (int k = list->max_level - 1; k >= 0;)
+	//printf("list->max_level %ld\n", list->max_level);
+	for (size_t k = list->max_level; k >= 1;)
 	{
 		if ((x->next[k] == NULL) || (list->compare(item, x->next[k]->item) < 0))
 		{
@@ -128,7 +129,7 @@ void insert_skiplist(struct _SkipList *list, void *item)
 			{
 				new->next[k] = x->next[k];
 				x->next[k] = new;
-				// printf("inserting new->next[k] %s\n", *(char **)new->next[k]);
+				printf("inserting --->%s\n", *(char **)x->next[k]);
 			}
 			k--;
 		}
@@ -145,11 +146,11 @@ void insert_skiplist(struct _SkipList *list, void *item)
 const void *search_skip_list(struct _SkipList *list, void *I)
 {
 	struct Node *x = list->head;
-	printf("searching %s\n", *(char **)I); //TODO remove
 	for (int i = list->max_level - 1; i >= 0; i--)
 	{
 		while (x->next[i] != NULL && list->compare(x->next[i]->item, I) < 0)
 		{
+			printf("x->next[i] %s\n", *(char **)x->next[i]->item);
 			x = x->next[i];
 		}
 	}

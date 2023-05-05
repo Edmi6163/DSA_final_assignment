@@ -1,7 +1,7 @@
 #include "unity/unity.h"
 #include "skip_list.h"
 
-void test_search_char_skip_list()
+void test_search_char_skip_list(void)
 {
   struct _SkipList *list = NULL; 
   new_skiplist(&list,10,compare_string);
@@ -24,7 +24,7 @@ void test_search_char_skip_list()
 }
 
 
-void test_insert_stirng_skip_list()
+void test_insert_string_skip_list(void)
 {
   struct _SkipList *list = NULL;
   new_skiplist(&list,MAX_HEIGHT,compare_string);
@@ -59,10 +59,11 @@ void test_insert_stirng_skip_list()
   
   clear_skiplist(&list);
 }
+
 int main()
 {
   UNITY_BEGIN();
-  RUN_TEST(test_insert_stirng_skip_list);
   RUN_TEST(test_search_char_skip_list);
+  RUN_TEST(test_insert_string_skip_list);
   return UNITY_END();
 }
