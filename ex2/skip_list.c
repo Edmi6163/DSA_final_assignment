@@ -2,6 +2,7 @@
 
 int compare_string(const void *a,const void *b)
 {
+	/*
 	if (a != NULL && b != NULL)
 	{
 		char *s1 = *(char **)a;
@@ -13,6 +14,8 @@ int compare_string(const void *a,const void *b)
 	if (a == NULL)
 		return -1;
 	return 1;
+	`*/
+	return strcmp((char *)a, (char *)b);
 }
 
 void free_string(void *a)
@@ -100,8 +103,7 @@ void clear_skiplist(struct _SkipList **list)
 
 /*
 	insert item in skip list
-	TODO:  not working :/
-*/
+	TODO:  not working : */
 void insert_skiplist(struct _SkipList *list, void *item)
 {
 	assert(list != NULL);
@@ -129,7 +131,7 @@ void insert_skiplist(struct _SkipList *list, void *item)
 			{
 				new->next[k] = x->next[k];
 				x->next[k] = new;
-				printf("inserting --->%s\n", *(char **)x->next[k]);
+				printf("inserting --->%s\n", (char *)x->next[k]);
 			}
 			k--;
 		}
@@ -139,6 +141,9 @@ void insert_skiplist(struct _SkipList *list, void *item)
 		}
 	}
 }
+
+
+
 
 /*
 	search item in skip list
