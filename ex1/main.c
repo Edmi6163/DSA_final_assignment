@@ -1,11 +1,15 @@
 #include "common.h"
+#include <stdio.h>
 
+
+  // exc 0 file in 1 file out 2 k 3 field 4
 int main(int argc, const char *argv[])
 {
 
-  int k;
   int field;
+  int k = atoi(argv[3]);
   size_t nitems = n_row(argv[1]);
+
   
   struct Records *array = calloc(nitems, sizeof(struct Records));
   if (array == NULL)
@@ -15,14 +19,7 @@ int main(int argc, const char *argv[])
   }
   printf("creating array\n");
   create_array(argv[1], array, nitems);
-  // question for the user, of how much k is
-  printf("Which value would u like to use for k?: ");
-  scanf("%d", &k);
-  // wich field to sort
-  printf("Which field would u like to sort?\n:1 field1\n:2 field2\n:3 field3\n ");
-  scanf("%d", &field);
-  //sizeof() in bytes of each element in the array
-  switch (field)
+  switch (atoi(argv[4]))
   {
   case 1:
     merge_binary_insertion_sort(array, nitems,sizeof(struct Records), k, compare_string);
@@ -38,5 +35,16 @@ int main(int argc, const char *argv[])
     exit(EXIT_FAILURE);
   }
 
+  FILE *f_out = fopen(argv[2], "w");
+  if(f_out == NULL){
+    fprintf(stderr,"Error opening file");
+    free(array);
+    exit(EXIT_FAILURE);
+  }
+  for(size_t i=0;i<nitems;i++){
+    fprintf(f_out,"%d,%s,%d,%lf\n",array[i].eId,array[i].field1,array[i].field2,array[i].field3);
+  }
+  fclose(f_out);
+  free(array);
   return 0;
 }

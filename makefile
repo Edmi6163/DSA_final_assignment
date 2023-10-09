@@ -1,8 +1,8 @@
 CC = gcc
 CFLAGS = -Wall -g
-ARGS = data/records.csv data/sorted.csv
+ARGS = data/records.csv data/sorted.csv 6 2
 
-all: lib run test
+all: lib test 
 
 all_dbg: lib dump
 

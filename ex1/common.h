@@ -19,7 +19,7 @@ struct Records
 void create_array(const char* file_path,struct Records *array,size_t size);
 size_t n_row(const char *file_path);
 void merge_binary_insertion_sort(void *base,size_t nitems,size_t size,size_t k,int (*compare)(const void*,const void *));
-void binary_insertion_sort(void *array,int left,int right,int (*compare)(const void*,const void *));
+void merge(void *array,int left,int mid,int right,size_t size,int (*compare)(const void *,const void *));
 
 int compare_string(const void *a, const void *b);
 int compare_int(const void *a, const void *b);
