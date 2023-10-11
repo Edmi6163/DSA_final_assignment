@@ -2,15 +2,8 @@
 #include <stdio.h>
 
 
-  // exc 0 file in 1 file out 2 k 3 field 4
-int main(int argc, const char *argv[])
-{
-
-  int field;
-  int k = atoi(argv[3]);
-  size_t nitems = n_row(argv[1]);
-
-  
+void sort_records(const char *infile, const char *outfile, size_t k, size_t field){
+  size_t nitems = n_row(infile);
   struct Records *array = calloc(nitems, sizeof(struct Records));
   if (array == NULL)
   {
@@ -18,8 +11,9 @@ int main(int argc, const char *argv[])
     exit(EXIT_FAILURE);
   }
   printf("creating array\n");
-  create_array(argv[1], array, nitems);
-  switch (atoi(argv[4]))
+  create_array(infile, array, nitems);
+  printf("array created withour errors\n");
+   switch (field)
   {
   case 1:
     merge_binary_insertion_sort(array, nitems,sizeof(struct Records), k, compare_string);
@@ -35,7 +29,7 @@ int main(int argc, const char *argv[])
     exit(EXIT_FAILURE);
   }
 
-  FILE *f_out = fopen(argv[2], "w");
+  FILE *f_out = fopen(outfile, "w");
   if(f_out == NULL){
     fprintf(stderr,"Error opening file");
     free(array);
@@ -45,6 +39,20 @@ int main(int argc, const char *argv[])
     fprintf(f_out,"%d,%s,%d,%lf\n",array[i].eId,array[i].field1,array[i].field2,array[i].field3);
   }
   fclose(f_out);
-  free(array);
+  free(array); 
+}
+
+  // TODO remove this exc 0 file in 1 file out 2 k 3 field 4
+int main(int argc, const char *argv[])
+{
+
+  size_t k = atoi(argv[3]);
+  size_t field = atoi(argv[4]);
+
+  const char *infile = argv[1];
+  const char *outfile = argv[2];
+ 
+  sort_records(infile,outfile, k,field);
+
   return 0;
 }

@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -Wall -g
-ARGS = data/records.csv data/sorted.csv 6 2
+ARGS = data/records.csv data/sorted.csv 1 2
 
 all: lib test 
 
@@ -12,6 +12,8 @@ lib:
 run:
 	./build/main_ex1 $(ARGS)
 
+gdb:
+	gdb ./build/main_ex1
 dump:
 	./build/main_ex1 $(ARGS) >> log.log
 
