@@ -6,6 +6,8 @@ all: lib test
 
 all_dbg: lib dump
 
+run_all: test run
+
 lib:
 	$(CC) $(CFLAGS) ex1/main.c ex1/merge_binary_insertion_sort.c ex1/comparable.c ex1/csvReader.c -o build/main_ex1
 

@@ -28,10 +28,6 @@ printf("merging...\n");
     fprintf(stderr, "Error allocating memory");
     exit(EXIT_FAILURE);
   }
-  // tmp array TODO: move up this comment
-  // memcpy(L, (char *)array + left * size, n1 * size);
-  // memcpy(R, (char *)array + (mid + 1) * size, n1 * size);
-
   int i = 0;
   int j = 0;
   int k = left;
@@ -60,17 +56,22 @@ size_t binary_search(void *array, size_t nitems, size_t size,
                      int (*compare)(const void *, const void *)) {
   size_t left = 0;
   size_t right = nitems;
+  printf("binary_search\n");
 
   while (left <= right) {
     size_t mid = left + (right - left) / 2;
+    printf("binary search while loop with mid: %ld\n", mid);
     const void *midElement = (char *)array + mid * size;
     int res = compare(midElement, array);
-    if (res == 0) {
-      left += mid + 1;
+    if (res < 0) {
+      right = mid -1;
+    } else if(res > 0){
+      left = mid + 1;
     } else {
-      right = mid;
+      return mid;
     }
   }
+  printf("left is %ld\n",left); //FIXME: infinite while loop
   return left;
 }
 
@@ -80,7 +81,9 @@ void binary_insertion_sort(void *array, int nitems, size_t size,
   for (size_t i = 1; i < nitems -1; i++) {
     printf("in for loop %ld\n",i);
     size_t j = i;
+    printf("j is %ld\n",j);
     void *key = (char *)array + j * size;
+    printf("key is %p\n",key);
 
     size_t insertPosition = binary_search(array, j, size, compare);
     printf("insertPosition %ld\n",insertPosition);
@@ -158,6 +161,6 @@ void merge_binary_insertion_sort(void *array, size_t nitems, size_t size,
     merge_binary_insertion_sort(array, mid, size, k, compare);
     merge_binary_insertion_sort((char *)array + mid * size, nitems - mid, size,
                                 k, compare);
-    merge(array, 0, mid - 1, nitems - 1, size, compare);
+    merge(array, left, mid - 1, nitems - 1, size, compare);
   }
 }

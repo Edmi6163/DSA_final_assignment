@@ -15,6 +15,9 @@ size_t n_row(const char *file_path) {
 
 struct Records *create_array(const char *file_path, struct Records *array,
                              size_t size) {
+
+  char line[256];
+  int recordIndex = 0;
   FILE *file = fopen(file_path, "r");
   if (file == NULL) {
     perror("Error opening file");
@@ -33,13 +36,11 @@ struct Records *create_array(const char *file_path, struct Records *array,
   struct Records *records =
       (struct Records *)malloc(numRecords * sizeof(struct Records));
   if (records == NULL) {
-    perror("Error allocating memory");
+    fprintf(stderr,"Error allocating memory");
     fclose(file);
     return NULL;
   }
 
-  char line[256];
-  int recordIndex = 0;
 
   while (fgets(line, sizeof(line), file) != NULL) {
     if (sscanf(line, "%d,%[^,],%d,%lf", &records[recordIndex].eId, line,
