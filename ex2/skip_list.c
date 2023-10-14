@@ -2,19 +2,6 @@
 
 int compare_string(const void *a,const void *b)
 {
-	/*
-	if (a != NULL && b != NULL)
-	{
-		char *s1 = *(char **)a;
-		char *s2 = *(char **)b;
-		return strcmp(s1, s2);
-	}
-	if (a == NULL && b == NULL)
-		return 0;
-	if (a == NULL)
-		return -1;
-	return 1;
-	`*/
 	return strcmp((char *)a, (char *)b);
 }
 
@@ -103,11 +90,11 @@ void clear_skiplist(struct _SkipList **list)
 
 /*
 	insert item in skip list
-	TODO:  not working : */
+	TODO:  not working : the item inserting in the skipList is null*/
 void insert_skiplist(struct _SkipList *list, void *item)
 {
 	assert(list != NULL);
-	struct Node *new = create_node(item, random_level(), list->size);
+	struct Node *new = create_node(item, random_level(), sizeof(item));
 	// printf("new node created with level %d\n", new->level);
 	printf("list->max_level %ld\n", list->max_level);
 
@@ -122,22 +109,19 @@ void insert_skiplist(struct _SkipList *list, void *item)
 
 	struct Node *x = list->head;
 
-	//printf("list->max_level %ld\n", list->max_level);
-	for (size_t k = list->max_level; k >= 1;)
-	{
-		if ((x->next[k] == NULL) || (list->compare(item, x->next[k]->item) < 0))
-		{
-			if (k < new->level)
-			{
+	for(size_t k = list->max_level;k >= 1; k--){
+		if((x->next[k] == NULL) || (list->compare(item,x->next[k])< 0)){
+
+			if(k <= new->level){
 				new->next[k] = x->next[k];
 				x->next[k] = new;
-				printf("inserting --->%s\n", (char *)x->next[k]);
+				printf("inserting --> %s\n", (char *)new->item);
+				TEST_ERROR
 			}
-			k--;
-		}
-		else
-		{
-			x = x->next[k];
+		} else {
+			while(x->next[k] != NULL && list->compare(item,x->next[k]) >= 0) {
+				x = x->next[k];
+			}
 		}
 	}
 }

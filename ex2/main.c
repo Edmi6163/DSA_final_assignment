@@ -97,7 +97,7 @@ void find_errors(const char *dictfile, const char *textfile, size_t max_height)
 	for (int i = 0; i < words; i++)
 	{
 		printf("checking word %s\n", phrase[i]);
-		if (search_skip_list(list, &phrase[i]) == NULL)
+		if (search_skip_list(list, phrase[i]) == NULL)
 			printf("%s ", phrase[i]);
 	}
 
