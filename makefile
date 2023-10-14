@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -g
+CFLAGS = -Wpedantic -Wall -g -O1
 ARGS = data/records.csv data/sorted.csv 1 2
 
 all: lib test 
@@ -14,8 +14,12 @@ lib:
 run:
 	./build/main_ex1 $(ARGS)
 
+mem_check:
+	valgrind --log-file="valgrind.log" -s ./build/test
+
 gdb:
 	gdb ./build/main_ex1
+
 dump:
 	./build/main_ex1 $(ARGS) >> log.log
 
@@ -26,5 +30,6 @@ run_test:
 	./build/test
 
 clean:
+	rm valgrind.log
 	rm log.log
 	rm -r build/*

@@ -24,9 +24,23 @@ printf("merging...\n");
   int n2 = right - mid;
   void *L = malloc(n1 * size);
   void *R = malloc(n2 * size);
+
+  if(n1 > 0){ 
+     L = malloc(n1 * size);
+}
+  if(n2 > 0){
+    R = malloc(n2 * size);
+  }
   if (L == NULL || R == NULL) {
     fprintf(stderr, "Error allocating memory");
     exit(EXIT_FAILURE);
+  }
+
+  for(int i = 0; i < n1; i++) {
+    memcpy((char *)L + i * size, (char *)array + (left + i) * size, size);
+  }
+  for(int j = 0; j < n2; j++) {
+    memcpy((char *)R + j * size, (char *)array + (mid + 1 + j) * size, size);
   }
   int i = 0;
   int j = 0;
@@ -44,6 +58,12 @@ printf("merging...\n");
   }
 
   while (i < n2) {
+    memcpy((char *)array + k * size, (char *)R + j * size, size);
+    j++;
+    k++;
+  }
+
+  while (j < n2) {
     memcpy((char *)array + k * size, (char *)R + j * size, size);
     j++;
     k++;
@@ -155,7 +175,7 @@ void merge_binary_insertion_sort(void *array, size_t nitems, size_t size,
   printf("nitems %ld\n", nitems);
   if ((right - left) <= k) {
     binary_insertion_sort(array, nitems, size, compare);
-  } else if (left - right) {
+  } else if (left < right) {
     // TODO warning: infinite recursion
     size_t mid = left + (right -left) / 2;
     merge_binary_insertion_sort(array, mid, size, k, compare);
