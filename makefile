@@ -15,7 +15,7 @@ run:
 # $(ARGS)
 
 debug:
-	gdb --args ./ex2/build/main_ex2 $(ARGS)
+	gdb --args ./ex2/build/skip_list_test 
 # $(ARGS)
 
 mem_check:
