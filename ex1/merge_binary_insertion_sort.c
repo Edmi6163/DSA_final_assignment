@@ -1,7 +1,4 @@
 #include "common.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 const void *swap(const void *a, const void *b, size_t size) {
   void *tmp = malloc(size);
   if (tmp == NULL) {
@@ -19,7 +16,9 @@ const void *swap(const void *a, const void *b, size_t size) {
 void merge(void *array, int left, int mid, int right, size_t size,
            int (*compare)(const void *, const void *)) {
 
+TEST_ERROR
 printf("merging...\n");
+TEST_ERROR
   int n1 = mid - left + 1;
   int n2 = right - mid;
   void *L = malloc(n1 * size);
@@ -70,6 +69,7 @@ printf("merging...\n");
   }
   free(L);
   free(R);
+  printf("ending merging \n");
 }
 
 size_t binary_search(void *array, size_t nitems, size_t size,
@@ -173,13 +173,15 @@ void merge_binary_insertion_sort(void *array, size_t nitems, size_t size,
 
   printf("merge_binary_insertion_sort\n with k %ld\n", k);
   printf("nitems %ld\n", nitems);
+  if(nitems <= 1){
+    return;
+  }
   if ((right - left) <= k) {
     binary_insertion_sort(array, nitems, size, compare);
   } else if (left < right) {
-    // TODO warning: infinite recursion
     size_t mid = left + (right -left) / 2;
     merge_binary_insertion_sort(array, mid, size, k, compare);
-    merge_binary_insertion_sort((char *)array + mid * size, nitems - mid, size,
+    merge_binary_insertion_sort((char *)array + mid * size, nitems - mid -1 , size,
                                 k, compare);
     merge(array, left, mid - 1, nitems - 1, size, compare);
   }

@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <stdlib.h>
 #include <string.h>
+#include <errno.h>
+#include <unistd.h>
 #include <assert.h>
 
 #define BUFF_SIZE 1024
@@ -15,6 +17,20 @@ struct Records
   int field2;
   double field3;
 };
+
+#ifndef TEST_ERROR
+#define TEST_ERROR                                 \
+    if (errno)                                     \
+    {                                              \
+        fprintf(stderr,                            \
+                "%s:%d: PID=%5d: Error %d (%s)\n", \
+                __FILE__,                          \
+                __LINE__,                          \
+                getpid(),                          \
+                errno,                             \
+                strerror(errno));                  \
+    }
+#endif
 
 struct Records *create_array(const char* file_path,struct Records *array,size_t size);
 size_t n_row(const char *file_path);

@@ -4,3 +4,4 @@ build/**
 log.log
 input/**
 ex2/build/**
+valgrind.log.core.*

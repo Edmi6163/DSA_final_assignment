@@ -51,7 +51,7 @@ void test_string_array_with_key_one(void)
   char f[] = "ba";
   char *actual[] = {a,b,c,d,e,f};
   char *expected[] = {a,e,f,d,c,b};
-  merge_binary_insertion_sort(actual,6,sizeof(char *),1,compare_string);
+  merge_binary_insertion_sort(actual,6,sizeof(actual[0]),1,compare_string);
   TEST_ASSERT_EQUAL_STRING_ARRAY(expected,actual,5);
 }
 
@@ -66,11 +66,11 @@ void test_double_array_with_k_one(void)
 int main()
 {
   UNITY_BEGIN();
+  RUN_TEST(test_string_array_with_key_six);
+  RUN_TEST(test_int_array_with_k_six);
   RUN_TEST(test_int_array_with_k_one);
   RUN_TEST(test_string_array_with_key_one);
   RUN_TEST(test_double_array_with_k_one);
-  RUN_TEST(test_string_array_with_key_one);
-  RUN_TEST(test_int_array_with_k_six);
   RUN_TEST(test_double_array_with_k_six);
 
   return UNITY_END();
