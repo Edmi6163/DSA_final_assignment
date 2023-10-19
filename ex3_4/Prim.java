@@ -4,7 +4,9 @@ import ex3_4.exceptions.GraphException;
 import ex3_4.structures.*;
 import java.util.*;
 import java.io.File;
+import java.io.FileNotFoundException;
 public class Prim {
+    public static Graph<String,Float> graph;
   public static void main(String[] args) {
     //main must do:
     //1. read the graph from the csv file args[1]
@@ -15,23 +17,33 @@ public class Prim {
       return;
     }
     readCsv(args[1]);
-    mst();
-    printResult();
+    // mst();
+    // printResult();
   } 
 
-  private static Graph<String,Float>  readCsv(String path) {
+  private static Graph<String,Float> readCsv(final String path) {
     //read the csv file and create the graph
-    File file = new File(path);
-    Scanner scanner = new Scanner(file);
-    Graph<String,Float> builder = new Graph<>();
-    while(scanner.hasNextLine()) {
-      String line = scanner.nextLine();
-      String[] values = line.split(",");
-      //add the edge to the graph
-      builder.addEdge(values[0], values[1], Float.parseFloat(values[2]));
+    System.out.println("reading csv file");
+    try {
+      File file = new File(path);
+      Scanner scanner = new Scanner(file);
+      Graph<String,Float> builder = new Graph<>(true);
+      while(scanner.hasNextLine()) {
+        String line = scanner.nextLine();
+        String[] values = line.split(",");
+        //add the edge to the graph
+        builder.addEdge(values[0], values[1], Float.parseFloat(values[2]));
+      }
+      scanner.close();
+      try {
+      graph = builder.build();
+      } catch( GraphException | ElementNotFoundException e) {
+        e.printStackTrace();
+      }
+    } catch (FileNotFoundException e) {
+      e.printStackTrace();
     }
-    scanner.close();
-    graph = builder.build();
-
+    //print all the edges just to debug purpose
+    return graph;
   }
 }

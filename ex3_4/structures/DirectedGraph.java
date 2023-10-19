@@ -45,18 +45,12 @@ public class DirectedGraph<V,E> {
     return new ArrayList<>(this.adjencyMap.keySet());
   }
 
-  public ArrayList<V> getNeighbors(V vertex){
-    return new ArrayList<>(this.adjencyMap.get(vertex).keySet());
-  }
-
-  public E getEdge(V from,V to){
-    return adjencyMap.get(from).get(to);
-  }
-
   public ArrayList<Edge<V,E>> getEdges(){
     ArrayList<Edge<V,E>> edges = new ArrayList<>();
 
     adjencyMap.forEach((from,toMap)->toMap.forEach((to,weight)->edges.add(new Edge<>(from,weight,to))));
+
+    return edges;
   }
 
 }

@@ -11,9 +11,10 @@ import ex3_4.exceptions.GraphException;
  * @param <E> the type of the edges
  */
 public class Graph<V, E> {
-  private final HashMap<V, HashMap<V, E>> map;
+  private final HashMap<V, HashMap<V, E>> map = new HashMap<>();
   private boolean directed;
   private final DirectedGraph<V,E> internalGraph;
+
   public Graph(boolean directed) {
     internalGraph = directed ? new DirectedGraph<>() : new UndirectedGraph<>();
   }
