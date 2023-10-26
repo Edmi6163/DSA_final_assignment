@@ -21,16 +21,19 @@ void merge(void *array, int left, int mid, int right, size_t size,
   printf("merging...\n");
   int n1 = mid - left + 1;
   int n2 = right - mid;
-  void *L = malloc(n1 * size);
-  void *R = malloc(n2 * size);
+  void *L = calloc(n1,size);
+  printf("memory address of L is %p\n", L);
+  void *R = calloc(n2,size);
+  printf("memory address of R is %p\n", R);
 
   if (L == NULL || R == NULL) {
     fprintf(stderr, "Error allocating memory");
     exit(EXIT_FAILURE);
   }
 
-  memcpy(&L, (char *)array + left * size, n1 * size);
-  memcpy(&R, (char *)array + (mid + 1) * size, n2 * size);
+  memcpy(L, (char *)array + left * size, n1 * size);
+  memcpy(R, (char *)array + (mid + 1) * size, n2 * size);
+
 
   int i = 0;
   int j = 0;

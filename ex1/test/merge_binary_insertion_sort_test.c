@@ -66,11 +66,11 @@ void test_double_array_with_k_one(void)
 int main()
 {
   UNITY_BEGIN();
-  RUN_TEST(test_string_array_with_key_six);
-  RUN_TEST(test_int_array_with_k_six);
-  RUN_TEST(test_int_array_with_k_one);
   RUN_TEST(test_string_array_with_key_one);
+  RUN_TEST(test_int_array_with_k_one);
   RUN_TEST(test_double_array_with_k_one);
+  RUN_TEST(test_int_array_with_k_six);
+  RUN_TEST(test_string_array_with_key_six);
   RUN_TEST(test_double_array_with_k_six);
 
   return UNITY_END();
