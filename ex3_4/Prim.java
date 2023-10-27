@@ -7,22 +7,28 @@ import java.io.File;
 import java.io.FileNotFoundException;
 public class Prim {
     public static Graph<String,Float> graph;
-  public static void main(String[] args) {
     //main must do:
     //1. read the graph from the csv file args[1]
     //2. calculate the minimum spanning forest with prim's algorithm
     //3. print the result to the console
-    if(args[1] == null) {
-      System.out.println("No file path provided ");
-      return;
-    }
-    readCsv(args[1]);
+  public static void main(String[] args) {
+
+    String filePath = "";
+    if(args.length > 0)
+      filePath = args[0];
+    else 
+      System.out.println("no file provided");
+    
+    readCsv(filePath);
+
     // mst();
     // printResult();
   } 
 
+  /*   
+   * @brief: read the csv file and create the graph adding the edges
+   */
   private static Graph<String,Float> readCsv(final String path) {
-    //read the csv file and create the graph
     System.out.println("reading csv file");
     try {
       File file = new File(path);
@@ -31,7 +37,6 @@ public class Prim {
       while(scanner.hasNextLine()) {
         String line = scanner.nextLine();
         String[] values = line.split(",");
-        //add the edge to the graph
         builder.addEdge(values[0], values[1], Float.parseFloat(values[2]));
       }
       scanner.close();
@@ -43,7 +48,7 @@ public class Prim {
     } catch (FileNotFoundException e) {
       e.printStackTrace();
     }
-    //print all the edges just to debug purpose
+    System.out.println("graph from csv created correctly");
     return graph;
   }
 }
