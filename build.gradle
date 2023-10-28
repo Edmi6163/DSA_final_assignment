@@ -8,6 +8,9 @@ sourceSets {
     main {
         java.srcDirs = ['ex3_4']
     }
+    test {
+        java.srcDirs = ['ex3_4/test']
+    }
 }
 repositories {
     mavenCentral()
@@ -27,6 +30,9 @@ application {
 
 test {
     useJUnit()
+    testLogging {
+        events 'PASSED', 'FAILED','SKIPPED'
+    }
 }
 
 run { // run task with arguments: -q --console=plain

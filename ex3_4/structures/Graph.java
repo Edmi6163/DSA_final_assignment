@@ -4,6 +4,8 @@ import java.util.HashMap;
 
 import ex3_4.exceptions.ElementNotFoundException;
 import ex3_4.exceptions.GraphException;
+import ex3_4.structures.DirectedGraph;
+import ex3_4.structures.UndirectedGraph;
 
 /*
  * Class representing a graph with generic vertices and edges
@@ -11,9 +13,9 @@ import ex3_4.exceptions.GraphException;
  * @param <E> the type of the edges
  */
 public class Graph<V, E> {
-  private final HashMap<V, HashMap<V, E>> map = new HashMap<>();
+  public final HashMap<V, HashMap<V, E>> map = new HashMap<>();
   private boolean directed;
-  private final DirectedGraph<V,E> internalGraph;
+  private final ex3_4.structures.DirectedGraph<V,E> internalGraph;
 
   public Graph(boolean directed) {
     internalGraph = directed ? new DirectedGraph<>() : new UndirectedGraph<>();
