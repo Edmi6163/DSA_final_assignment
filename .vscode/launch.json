@@ -8,10 +8,18 @@
       "type": "java",
       "name": "Prim",
       "request": "launch",
+      "mainClass": "Prim",
+      "projectName": "laboratorio-algoritmi-2022-2023"
+    },
+    {
+      "type": "java",
+      "name": "Prim",
+      "request": "launch",
       "mainClass": "ex3_4.Prim",
       "projectName": "laboratorio-algoritmi-2022-2023_72a7227",
-      "args":["./inputFile/italian_dist_graph.csv"]
+      "args": [
+        "./inputFile/italian_dist_graph.csv"
+      ]
     }
-
   ]
 }
