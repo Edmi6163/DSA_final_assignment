@@ -3,3 +3,6 @@ data/**
 input/**
 ex2/build/**
 inputFile/**
+.gradle/**
+build/**
+gradle/**
