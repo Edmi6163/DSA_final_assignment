@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS= -Wpedantic -Wall -g 
+CFLAGS= -Wpedantic -Wall -g -std=c17
 ARGS= input/dictionary.txt  input/correctme.txt
 
 quick: clean all
@@ -28,7 +28,7 @@ test:
 run_test:
 	./ex2/build/skip_list_test
 clean:
-	rm -rf ex2/build
+	rm -r ex2/build
 	rm valgrind.log
 	rm valgrind.log.core.*
 

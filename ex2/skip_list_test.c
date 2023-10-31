@@ -6,7 +6,7 @@ void test_search_char_skip_list(void) {
   struct _SkipList *list = NULL;
   new_skiplist(&list, 10, compare_string);
 
-  char actual[6] = {'l', 'f', 'a', 's', 'd', 'c'};
+  char actual[7] = {'t', 'e', 's', 't', 'i', 'n', 'g'};
 
   insert_skiplist(list, actual + 0);
   insert_skiplist(list, actual + 1);
@@ -16,7 +16,7 @@ void test_search_char_skip_list(void) {
   insert_skiplist(list, actual + 5);
   insert_skiplist(list, actual + 6);
 
-  char to_search[6] = {'l', 'z', 'k', '4', 'd'};
+  char to_search[6] = {'l', 't', 'k', '4', 'g'};
   TEST_ASSERT_EQUAL_INT(
       0, compare_string(search_skip_list(list, to_search + 0), actual + 0));
   TEST_ASSERT_NULL(search_skip_list(list, to_search + 1));
@@ -27,8 +27,8 @@ void test_search_char_skip_list(void) {
 }
 
 void test_insert_string_skip_list(void) {
-  struct _SkipList *list = NULL;
-  new_skiplist(&list, MAX_HEIGHT, compare_string);
+  struct _SkipList *list = malloc(sizeof(struct _SkipList));
+  new_skiplist(&list, list->max_height, compare_string);
   char *a = malloc(sizeof(char) * strlen("aaaa") + 1);
   strcpy(a, "aaaa");
   char *b = malloc(sizeof(char) * strlen("sdadfff") + 1);
@@ -58,11 +58,16 @@ void test_insert_string_skip_list(void) {
   TEST_ASSERT_EQUAL_STRING_ARRAY(expected, actual, 5);
 
   clear_skiplist(&list);
+  free(a);
+  free(b);
+  free(c);
+  free(d);
+  free(e);
 }
 
 int main() {
   UNITY_BEGIN();
-  RUN_TEST(test_search_char_skip_list);
   RUN_TEST(test_insert_string_skip_list);
+  RUN_TEST(test_search_char_skip_list);
   return UNITY_END();
 }
