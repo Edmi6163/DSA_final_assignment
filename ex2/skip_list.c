@@ -12,7 +12,7 @@ void free_string(void *a) {
   free((char *)a);
 }
 
-int random_level() {
+int random_level(void) {
   int lvl = 1;
   while (rand() % 2 && lvl < MAX_HEIGHT)
     lvl++;
@@ -117,16 +117,20 @@ void insert_skiplist(struct _SkipList *list, void *item) {
   if (new->level > list->max_level)
     list->max_level = new->level;
 
-  struct Node *x = list->head;
+  struct Node *x = list->head; //FIXME x->item is NULL 
   if(list == NULL) {
     printf("list is null\n");
     return;
   }
   for (size_t k = list->max_level; k >= 1; k--) {
     while (x->next[k] != NULL && list != NULL && list->compare(item, x->next[k]->item) < 0) {
-      x = x->next[k];
-    }
+      x = x->next[k]; //TODO x->next[k] enter in second loop NULL
+    } 
     if (k <= level) {
+      if(x==NULL){
+        fprintf(stderr,"x is null");
+        return;
+      }
       new->next[k] = x->next[k];
       x->next[k] = new;
     }

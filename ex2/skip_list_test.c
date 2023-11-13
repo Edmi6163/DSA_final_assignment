@@ -2,6 +2,13 @@
 #include "unity/unity.h"
 #include <assert.h>
 
+void test_empty_skiplist(void){
+  struct _SkipList *list = NULL;
+  new_skiplist(&list,10,compare_string);
+  TEST_ASSERT_NOT_NULL(list);
+  clear_skiplist(&list);
+}
+
 void test_search_char_skip_list(void) {
   struct _SkipList *list = NULL;
   new_skiplist(&list, 10, compare_string);
@@ -65,8 +72,9 @@ void test_insert_string_skip_list(void) {
   free(e);
 }
 
-int main() {
+int main(void) {
   UNITY_BEGIN();
+  RUN_TEST(test_empty_skiplist);
   RUN_TEST(test_insert_string_skip_list);
   RUN_TEST(test_search_char_skip_list);
   return UNITY_END();

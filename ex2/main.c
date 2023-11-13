@@ -77,10 +77,16 @@ void reading_dictionary(const char *dictfile, struct _SkipList *list)
 			exit(EXIT_FAILURE);
 		}
 		sscanf(buffer, "%s", word);
+		printf("%s word %s \n",__FILE__, word);
 		insert_skiplist(list, word);
+		printf("%s inserted word %s \n",__FILE__, word);
 		words_count++;
+		printf("words count is %d\n",words_count);
+		//FIXME after this print the program give Fatal glibc error: malloc.c:2594 (sysmalloc): assertion failed: (old_top == initial_top (av) && old_size == 0) || ((unsigned long) (old_size) >= MINSIZE && prev_inuse (old_top) && ((unsigned long) old_end & (pagesize - 1)) == 0)
+// make: *** [makefile:14: run] Aborted (core dumped)
+		free(word);
 	}
-	printf("\n completed dictionary \n");
+	printf("\n completed dictionary with %d\n",words_count);
 	fclose(fp);
 }
 

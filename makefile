@@ -1,4 +1,4 @@
-CC=gcc
+CC = clang
 CFLAGS= -Wpedantic -Wall -g -std=c17
 ARGS= input/dictionary.txt  input/correctme.txt
 
@@ -15,8 +15,8 @@ run:
 # $(ARGS)
 
 debug:
-	gdb --args ./ex2/build/skip_list_test 
-# $(ARGS)
+	lldb  ./ex2/build/skip_list_test 
+# --args $(ARGS)
 
 mem_check:
 	valgrind --log-file="valgrind.log" -s ./ex2/build/skip_list_test
