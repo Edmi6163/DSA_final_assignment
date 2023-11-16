@@ -1,5 +1,5 @@
-CC = clang
-CFLAGS= -Wpedantic -Wall -g -std=c17
+CC = gcc
+CFLAGS= -Wpedantic -Wall -Wextra -g -std=c17
 ARGS= input/dictionary.txt  input/correctme.txt
 
 quick: clean all
@@ -15,7 +15,7 @@ run:
 # $(ARGS)
 
 debug:
-	lldb  ./ex2/build/skip_list_test 
+	gdb ./ex2/build/skip_list_test 
 # --args $(ARGS)
 
 mem_check:

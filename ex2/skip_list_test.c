@@ -34,8 +34,8 @@ void test_search_char_skip_list(void) {
 }
 
 void test_insert_string_skip_list(void) {
-  struct _SkipList *list = malloc(sizeof(struct _SkipList));
-  new_skiplist(&list, list->max_height, compare_string);
+  struct _SkipList *list = NULL;
+  new_skiplist(&list, 20, compare_string);
   char *a = malloc(sizeof(char) * strlen("aaaa") + 1);
   strcpy(a, "aaaa");
   char *b = malloc(sizeof(char) * strlen("sdadfff") + 1);
@@ -49,13 +49,13 @@ void test_insert_string_skip_list(void) {
 
   char *actual[5] = {a, b, c, d, e};
 
-  insert_skiplist(list, a);
-  insert_skiplist(list, b);
-  insert_skiplist(list, c);
-  insert_skiplist(list, d);
-  insert_skiplist(list, e);
+  insert_skiplist(list, &a);
+  insert_skiplist(list, &b);
+  insert_skiplist(list, &c);
+  insert_skiplist(list, &d);
+  insert_skiplist(list, &e);
 
-  char *expected[] = {",", "4", "aaaa", "ccc,", "sdadfff"};
+  char *expected[] = {"aaaa", "sdadfff", "ccc,", ",", "4"};
   struct Node *tmp = list->head->next[0];
 
   for (int i = 0; tmp != NULL; tmp = tmp->next[0]) {
@@ -71,6 +71,7 @@ void test_insert_string_skip_list(void) {
   free(d);
   free(e);
 }
+
 
 int main(void) {
   UNITY_BEGIN();

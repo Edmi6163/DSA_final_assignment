@@ -6,3 +6,5 @@ inputFile/**
 .gradle/**
 build/**
 gradle/**
+valgrind.log
+valgrind.log.*

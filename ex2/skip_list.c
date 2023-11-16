@@ -118,24 +118,32 @@ void insert_skiplist(struct _SkipList *list, void *item) {
     list->max_level = new->level;
 
   struct Node *x = list->head; //FIXME x->item is NULL 
+  printf("x points to %p\n", (void *) x);
+  fflush(stdout);
   if(list == NULL) {
     printf("list is null\n");
     return;
   }
-  for (size_t k = list->max_level; k >= 1; k--) {
-    while (x->next[k] != NULL && list != NULL && list->compare(item, x->next[k]->item) < 0) {
+  for (size_t k = list->max_level-1; k >= 1; k--) {
+    /*while (x->next[k] != NULL && list != NULL && list->compare(item, x->next[k]->item) < 0) {
       x = x->next[k]; //TODO x->next[k] enter in second loop NULL
-    } 
-    if (k <= level) {
-      if(x==NULL){
-        fprintf(stderr,"x is null");
-        return;
+    } */
+    if(x->next[k] != NULL)
+    if(x->next[k]==NULL||(*(list)->compare)(item, (x->next[k])->item)) {
+      if (k <= level) {
+        if(x==NULL){
+          fprintf(stderr,"x is null");
+          return;
+        }
+        new->next[k] = x->next[k];
+        x->next[k] = new;
+      }else{
+        x = x -> next[k];
+        k++;
       }
-      new->next[k] = x->next[k];
-      x->next[k] = new;
     }
   }
-  printf("[%s] inserted %s at level %d\n",__FILE__, (char *)new->item,level);
+  //printf("[%s] inserted %s at level %d\n",__FILE__, (char *)new->item,level);
 }
 
 /*

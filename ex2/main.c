@@ -104,7 +104,7 @@ void find_errors(const char *dictfile, const char *textfile, size_t max_height)
 	{
 		printf("checking word %s\n", phrase[i]);
 		if (search_skip_list(list, phrase[i]) == NULL)
-			printf("%s ", phrase[i]);
+			printf("%s\n", phrase[i]);
 	}
 
 	clear_skiplist(&list);
@@ -122,7 +122,7 @@ int main(int argc, char **argv)
 	if (argc < 3)
 		printf("not enough argument passed \n");
 	TEST_ERROR
-	find_errors(dict, corr, 10);
 	printf("looking for any errors .... \n");
+	find_errors(dict, corr, 10);
 	return 0;
 }
