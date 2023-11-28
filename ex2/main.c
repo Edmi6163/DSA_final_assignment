@@ -1,11 +1,14 @@
 #include "skip_list.h"
-#include <stdio.h>
-#include <string.h>
 
-#define MAXW 64 // usually a words isn't longer than 64 characters
 #define MAXC 256
+#define MAX_HEIGHT 16 
 
 
+void to_lowercase(char *str){
+  for(int i = 0; str[i]; i++){
+    str[i] = tolower(str[i]);
+  }
+}
 void reading_dictionary(const char *dictfile, struct _SkipList *list) {
 
   char buffer[MAXC];
@@ -16,10 +19,11 @@ void reading_dictionary(const char *dictfile, struct _SkipList *list) {
 
   while (fgets(buffer, sizeof(buffer), fp)) {
     strtok(buffer, "\n");
+    to_lowercase(buffer);
     char *word_to_insert = malloc(strlen(buffer) + 1);
     strcpy(word_to_insert, buffer);
     if (!word_to_insert) {
-      TEST_ERROR
+      fprintf(stderr,"Error allocating memory\n");
       exit(1);
     }
     insert_skiplist(list, word_to_insert);
@@ -32,8 +36,9 @@ void reading_dictionary(const char *dictfile, struct _SkipList *list) {
 
 void find_errors(const char *dictfile, const char *textfile) {
   struct _SkipList *list;
+  clock_t begin, end;
 	FILE *phrase = fopen(textfile,"r");
-  new_skiplist(&list, 10, compare_string);
+  new_skiplist(&list, MAX_HEIGHT, compare_string);
   reading_dictionary(dictfile, list);
 
 	char line[1024];
@@ -42,11 +47,16 @@ void find_errors(const char *dictfile, const char *textfile) {
 	while(fgets(line,sizeof(line),phrase)){
 		char *token = strtok(line," \t\n\r.,;:!-");
 		while(token){
+      to_lowercase(token); 
+      begin = clock();
 			if(!search_skip_list(list,token)){
       printf("The word \033[31m%s\033[0m was not found, so probably is written incorrectly\n",token);
 			}
+      end = clock();
 			token = strtok(NULL, " \t\n\r.,;:!-");
 		}
+
+    printf("Time taken: %f seconds\n", (double)(end - begin) / CLOCKS_PER_SEC);
 		fclose(phrase);
 		clear_skiplist(&list);
 	}

@@ -1,4 +1,5 @@
 #pragma once
+#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -13,7 +14,7 @@
 #include <stdlib.h>
 
 
-#define MAX_HEIGHT 10
+
 struct Node {
   struct Node **next;
   size_t size;

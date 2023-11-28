@@ -31,7 +31,7 @@ run_test:
 	./ex2/build/skip_list_test
 clean:
 	rm -r ex2/build
-	rm valgrind.log
-	rm valgrind.log.core.*
+#	rm valgrind.log
+#	rm valgrind.log.core.*
 
 
