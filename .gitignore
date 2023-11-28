@@ -6,3 +6,5 @@ input/**
 ex2/build/**
 valgrind.log.core.*
 inputFile/**
+gradle/**
+.gradle/**
