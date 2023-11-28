@@ -1,20 +1,8 @@
 #include "common.h"
 
-const void *swap(const void *a, const void *b, size_t size) {
-  void *tmp = malloc(size);
-  if (tmp == NULL) {
-    fprintf(stderr, "Error allocating memory");
-    exit(EXIT_FAILURE);
-  }
-  memcpy(tmp, a, size);
-  memcpy((void *)a, b, size);
-  memcpy((void *)b, tmp, size);
-  free(tmp);
-  return a;
-}
-
 // generic merge function
-void merge(void *array,size_t mid,size_t right,size_t size,int (*compare)(const void *, const void *)){
+void merge(void *array, size_t mid, size_t right, size_t size,
+           int (*compare)(const void *, const void *)) {
 
   void *copy = malloc(right * size);
   memcpy(copy, array, right * size);
