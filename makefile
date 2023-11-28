@@ -15,8 +15,10 @@ run:
 # $(ARGS)
 
 debug:
-	gdb ./ex2/build/skip_list_test 
-# --args $(ARGS)
+	gdb --args ./ex2/build/main_ex2 $(ARGS)  
+ 
+debug_test:
+	gdb ./ex2/build/skip_list_test
 
 mem_check:
 	valgrind --log-file="valgrind.log" -s ./ex2/build/skip_list_test
