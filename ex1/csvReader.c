@@ -1,60 +1,146 @@
 #include "common.h"
-#include <stddef.h>
 #include <stdio.h>
 
-size_t n_row(const char *file_path) {
-  FILE *fp = fopen(file_path, "r");
-  char buffer[BUFF_SIZE];
-  size_t nRow = 0;
+void free_row(struct Records *line) { free(line->field1); }
+bool is_number(const char *str) {
+  // Ignore leading whitespace
+  while (*str && isspace(*str)) {
+    str++;
+  }
 
-  while (fgets(buffer, BUFF_SIZE, fp))
-    nRow++;
-  fclose(fp);
-  return nRow;
+  // Check for a sign (+ or -)
+  if (*str == '+' || *str == '-') {
+    str++;
+  }
+
+  bool has_decimal_point = false;
+  bool has_digit = false;
+  while (*str) {
+    if (*str == '.') {
+      if (has_decimal_point) {
+        return false; // Multiple decimal points are not allowed
+      }
+      has_decimal_point = true;
+    } else if (isdigit(*str)) {
+      has_digit = true;
+    } else {
+      return false; // Non-digit characters are not allowed
+    }
+    str++;
+  }
+
+  return has_digit; // Ensure there is at least one digit in the number
 }
 
-struct Records *create_array(const char *file_path, struct Records *array,
-                             size_t size) {
-
-  char line[256];
-  int recordIndex = 0;
-  FILE *file = fopen(file_path, "r");
-  if (file == NULL) {
-    perror("Error opening file");
+/*
+ * Reads the file and creates an array of Records
+ * Returns NULL if there was an error
+ * memory gets reallocated if needed
+ */
+struct Records *create_array(FILE *fp, int *num_rows) {
+  char *line = NULL;
+  size_t len = 0;
+  ssize_t read_bytes;
+  int num_allocated = 32;
+  int num_read = 0;
+  struct Records *rows = malloc(num_allocated * sizeof(struct Records));
+  if (rows == NULL) {
+    fprintf(stderr,"Error allocating memory for rows");
     return NULL;
   }
 
-  size_t numRecords = 0;
-  char ch;
-  while ((ch = fgetc(file)) != EOF) {
-    if (ch == '\n') {
-      numRecords++;
-    }
-  }
-  fseek(file, 0, SEEK_SET);
-
-  struct Records *records =
-      (struct Records *)malloc(numRecords * sizeof(struct Records));
-  if (records == NULL) {
-    fprintf(stderr,"Error allocating memory");
-    fclose(file);
+  if (fp == NULL) {
+    fprintf(stderr,"Error opening file");
+    free(rows);
     return NULL;
   }
 
-
-  while (fgets(line, sizeof(line), file) != NULL) {
-    if (sscanf(line, "%d,%[^,],%d,%lf", &records[recordIndex].eId, line,
-               &records[recordIndex].field2,
-               &records[recordIndex].field3) == 4) {
-      records[recordIndex].field1 = strdup(line);
-      // printf("Read eId: %d, field1: %s, field2: %d, field3: %.2lf\n",records[recordIndex].eId, records[recordIndex].field1,records[recordIndex].field2, records[recordIndex].field3);
-      recordIndex++;
-    } else {
-      printf("Error parsing line: %s\n", line);
+  while ((read_bytes = getline(&line, &len, fp)) != -1) {
+    if (line[read_bytes - 1] == '\n') {
+      line[read_bytes - 1] = '\0';
     }
+
+    if (num_read >= num_allocated) {
+      num_allocated *= 2;
+      struct Records *new_rows =
+          realloc(rows, num_allocated * sizeof(struct Records));
+      if (new_rows == NULL) {
+        fprintf(stderr,"Error reallocating memory for rows");
+        for (int i = 0; i < num_read; i++) {
+          free_row(&rows[i]);
+        }
+        free(rows);
+        fclose(fp);
+        free(line);
+        return NULL;
+      }
+      rows = new_rows;
+    }
+
+    char *token;
+    char *next_ptr;
+    int field = 0;
+
+    token = strtok_r(line, ",", &next_ptr);
+    while (token != NULL) {
+      switch (field) {
+      case 0:
+        if (!is_number(token)) {
+          fprintf(stderr, "Error parsing ID field\n");
+          goto next_line;
+        }
+        rows[num_read].eId = atoi(token);
+        break;
+      case 1:
+        rows[num_read].field1 = strdup(token);
+        if (rows[num_read].field1 == NULL) {
+          fprintf(stderr,"Error allocating memory for field1\n");
+          for (int i = 0; i < num_read; i++) {
+            free_row(&rows[i]);
+          }
+          free(rows);
+          fclose(fp);
+          free(line);
+          return NULL;
+        }
+        break;
+      case 2:
+        if (!is_number(token)) {
+          fprintf(stderr, "Error parsing field2\n");
+          goto next_line;
+        }
+        rows[num_read].field2 = atoi(token);
+        break;
+      case 3:
+        if (!is_number(token)) {
+          fprintf(stderr, "Error parsing field3\n");
+          goto next_line;
+        }
+        rows[num_read].field3 = strtod(token, NULL);
+        break;
+      default:
+        fprintf(stderr, "Error: too many fields in the row\n");
+        goto next_line;
+      }
+      field++;
+      token = strtok_r(NULL, ",", &next_ptr);
+    }
+
+    if (field != 4) {
+      fprintf(stderr, "Error: not enough fields in the row\n");
+      goto next_line;
+    }
+
+    num_read++;
+
+  next_line:
+    continue;
   }
 
-  fclose(file);
-  size = numRecords;
-  return records;
+  fclose(fp);
+  if (line)
+    free(line);
+
+  *num_rows = num_read;
+  return rows;
 }
