@@ -12,7 +12,7 @@ void merge(void *array, size_t mid, size_t right, size_t size,
   char *Rend = L + right * size;
 
   char *p = (char *)array;
-  for (int i = 0; i < right; ++i) {
+  for (size_t i = 0; i < right; ++i) {
     if (L == Lend) {
       memcpy(p, R, size);
       R += size;
@@ -95,9 +95,9 @@ void merge_binary_insertion_sort(void *array, size_t nitems, size_t size,
     return;
   }
 
-  size_t split = nitems / 2;
-  merge_binary_insertion_sort(array, split, size, k, compare);
-  merge_binary_insertion_sort(((char *)array) + split * size, nitems - split,
+  size_t mid = nitems / 2;
+  merge_binary_insertion_sort(array, mid, size, k, compare);
+  merge_binary_insertion_sort(((char *)array) + mid * size, nitems - mid,
                               size, k, compare);
-  merge(array, split, nitems, size, compare);
+  merge(array, mid, nitems, size, compare);
 }

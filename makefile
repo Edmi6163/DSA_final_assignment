@@ -30,6 +30,7 @@ run_test:
 	./build/test
 
 clean:
+	rm data/sorted.csv
 	rm valgrind.log
 	rm log.log
 	rm -r build/*
