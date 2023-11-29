@@ -51,7 +51,7 @@ size_t binary_search(void *elem, void *array, size_t nitems, size_t size,
 void binary_insertion_sort(void *array, int nitems, size_t size,
                            int (*compare)(const void *, const void *)) {
   void *tmp = malloc(size);
-  for (size_t i = 1; i < nitems; ++i) {
+  for (int i = 1; i < nitems; ++i) {
     size_t pos =
         binary_search((char *)array + i * size, array, i, size, compare);
     memcpy(tmp, (char *)array + i * size, size);

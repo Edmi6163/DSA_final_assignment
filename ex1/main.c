@@ -29,7 +29,7 @@ void sort_records(const char *infile, const char *outfile, size_t k, size_t fiel
     free(array);
     exit(EXIT_FAILURE);
   }
-  for(size_t i=0;i<nitems;i++){
+  for(int i=0;i<nitems;i++){
     fprintf(f_out,"%d,%s,%d,%lf\n",array[i].eId,array[i].field1,array[i].field2,array[i].field3);
   }
   fclose(f_out);
