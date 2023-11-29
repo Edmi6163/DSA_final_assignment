@@ -1,4 +1,4 @@
-package ex3_4.exceptions;
+package exceptions;
 
 public class GraphException extends Exception{
   public  GraphException(String message) {

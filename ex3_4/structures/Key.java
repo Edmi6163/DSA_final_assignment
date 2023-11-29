@@ -11,7 +11,7 @@ public class Key {
     this.parent = null;
   }
 
-  public String getEdge() {
+  public String getVertex() {
     return edge;
   }
 

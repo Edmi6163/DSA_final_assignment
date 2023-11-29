@@ -1,4 +1,4 @@
-package ex3_4.structures;
+package structures;
 import exceptions.*;
 import structures.AbstractQueue;
 

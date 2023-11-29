@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import ex3_4.exceptions.GraphException;
+import exceptions.GraphException;
 import ex3_4.structures.Edge;
 
 
@@ -46,7 +46,7 @@ public class Graph<V, E> {
   public boolean addEdge(V a,V b,E weight){
     if(!containsVertex(a) || !containsVertex(b)) {
       System.out.println("vertex not found");
-      return false
+      return false;
     }
     if(weight == null && isWeighted()) {
       System.out.println("weight not found");
@@ -104,6 +104,14 @@ public class Graph<V, E> {
 
     public int getEdgeNum() {
     return adjencyMap.size();
+    }
+
+    public int getVertexNum() {
+      return adjencyMap.size();
+    }
+
+    public AbstractCollection<V> getVertices(){
+      return new ArrayList<>(adjencyMap.keySet());
     }
 
    public AbstractCollection<AbstractEdge<V,E>> getEdges(){
