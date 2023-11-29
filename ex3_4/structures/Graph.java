@@ -5,10 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import ex3_4.exceptions.ElementNotFoundException;
 import ex3_4.exceptions.GraphException;
-import ex3_4.structures.DirectedGraph;
-import ex3_4.structures.UndirectedGraph;
 
 
 /*

@@ -1,8 +1,28 @@
 package ex3_4.structures;
-// https://howtodoinjava.com/java14/java-14-record-type/
 
-public record Edge<V,E>(V source,E weight,V target) {
-  public Edge<V,E> getReverse(){
-    return new Edge<>(this.target, this.weight, this.source);
+import structures.AbstractEdge;
+import structures.AbstractQueue;
+
+public class Edge<V,E> implements AbstractEdge<V,E> {
+  private final V start;
+  private final V end;
+  private final E weight;
+
+  public Edge(V start,V end,E weight){
+    this.start = start;
+    this.end = end;
+    this.weight = weight;
   }
+
+  public V getStart(){
+    return start;
+  }
+
+  public V getEnd(){
+    return end;
+  }
+
+    public E getWeight(){
+        return weight;
+    }
 }
