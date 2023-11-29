@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -Wpedantic -Wall -Wextra -g
-ARGS = data/records.csv data/sorted.csv 6 2
+ARGS = data/records.csv data/sorted.csv 15 3
 
 all: lib test 
 
@@ -17,14 +17,18 @@ run:
 mem_check:
 	valgrind --log-file="valgrind.log" -s ./build/test
 
-gdb:
+debug:
 	gdb --args ./build/main_ex1 $(ARGS)
+
+debug_test:
+	gdb  ./build/test 
+
 
 dump:
 	./build/main_ex1 $(ARGS) >> log.log
 
 test:
-	$(CC) $(CFLAGS) ex1/merge_binary_insertion_sort.c ex1/comparable.c ex1/test/unity.c ex1/test/merge_binary_insertion_sort_test.c -o build/test
+	$(CC) $(CFLAGS) ex1/merge_binary_insertion_sort.c ex1/test/generic_comparable.c ex1/test/unity.c ex1/test/merge_binary_insertion_sort_test.c -o build/test
 
 run_test:
 	./build/test
