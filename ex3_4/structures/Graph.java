@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import ex3_4.exceptions.GraphException;
+import ex3_4.structures.Edge;
 
 
 /*
@@ -111,7 +112,7 @@ public class Graph<V, E> {
       for(Map.Entry<V,E> entry: adjencyMap.get(source).entrySet()){
         V target = entry.getKey();
         E weight = entry.getValue();
-        edges.add(new Edge<>(source,target,label));
+        edges.add(new Edge<>(source,target,weight));
       }
     }
     return edges;
