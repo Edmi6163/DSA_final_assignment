@@ -26,10 +26,82 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
 			if(comparator.compare(queue.get(parentIndex),queue.get(index)) <= 0){
 				break;
 			}
-			swap(heap,parentIndex,index);
+			swap(queue,parentIndex,index);
 			index = parentIndex;
 		}
 	}
+
+	private void heapifyDown(int index){
+		int leftChildIndex = index * 2 +1;
+		int rightChildIndex = index *2 +2;
+
+		while(leftChildIndex < queue.size()){
+			int smallestChildIndex = leftChildIndex;
+			if( rightChildIndex < queue.size() && comparator.compare(queue.get(rightChildIndex),queue.get(leftChildIndex)) < 0)
+				smallestChildIndex = rightChildIndex;
+			if(comparator.compare(queue.get(smallestChildIndex),queue.get(index)) < 0)
+				break;
+
+			swap(queue,smallestChildIndex,index);
+			index = smallestChildIndex;
+			leftChildIndex = index * 2 +1;
+			rightChildIndex = index *2 +2;
+		}
+
+	}
+	@Override
+	public boolean empty() {
+		return queue.isEmpty();
+	}
+
+	@Override
+	public boolean push(E e) {
+		if(indexMap.containsKey(e))
+			return false;
+		queue.add(e);
+		int index = queue.size()-1;
+		indexMap.put(e,index);
+		heapifyUp(index);
+		return true;
+	}
+
+	@Override
+	public E top() {
+		if(queue.isEmpty())
+			return null;
+		return queue.get(0);
+	}
+
+	@Override
+	public void pop() {
+		if(queue.isEmpty())
+			return;
+		int lastIndex = queue.size()-1;
+		swap(queue,0,lastIndex);
+		indexMap.remove(queue.get(lastIndex));
+		queue.remove(lastIndex);
+		heapifyDown(0);
+	}
+
+	public boolean contains(E e){
+		return indexMap.containsKey(e);
+	}
+
+	private void swap(ArrayList<E> list,int i,int j){
+		E temp = list.get(i);
+		list.set(i,list.get(j));
+		list.set(j,temp);
+		indexMap.put(list.get(i),i);
+		indexMap.put(list.get(j),j);
+	}
+
+
+
+
+
+
+
+
 
 
 }

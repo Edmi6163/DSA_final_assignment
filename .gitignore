@@ -3,6 +3,7 @@ input/**
 ex2/build/**
 lib/**
 inputFile/**
+build/**
 # Ignore Gradle project-specific cache directory
 .gradle
 
@@ -10,4 +11,3 @@ inputFile/**
 build
 gradle/**
 .idea/**
-main_ex1
