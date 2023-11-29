@@ -37,7 +37,6 @@ void sort_records(const char *infile, const char *outfile, size_t k, size_t fiel
   free(array); 
 }
 
-  // TODO remove this exc 0 file in 1 file out 2 k 3 field 4
 int main(int argc, const char *argv[])
 {
 
