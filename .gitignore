@@ -9,3 +9,5 @@ inputFile/**
 # Ignore Gradle build output directory
 build
 gradle/**
+.idea/**
+main_ex1

@@ -1,4 +1,4 @@
-package ex3_4.structures;
+package structures;
 
 import java.util.HashMap;
 
@@ -6,6 +6,7 @@ import ex3_4.exceptions.ElementNotFoundException;
 import ex3_4.exceptions.GraphException;
 import ex3_4.structures.DirectedGraph;
 import ex3_4.structures.UndirectedGraph;
+
 
 /*
  * Class representing a graph with generic vertices and edges

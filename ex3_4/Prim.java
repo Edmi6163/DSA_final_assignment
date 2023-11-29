@@ -1,4 +1,3 @@
-
 import exceptions.ElementNotFoundException;
 import exceptions.GraphException;
 import structures.Graph;
@@ -58,42 +57,13 @@ public class Prim {
   /*
    * @brief: generic implementation of a Prim's minimum spanning tree algorithm
    */
-  public static Graph<String,Float> mst(Graph <String,Float> graph){
-		System.out.println("calculating mst: ");
-    Graph<String,Float> mst = new Graph<>(true);
-    Set<String> visited = new HashSet<>();
-    PriorityQueue<String,Float> edgeQueue = new PriorityQueue<>(Comparator.comparing(v1 -> graph.map.get(v1),Float::compare));
-    if(graph.map.isEmpty()) {
-      return mst;
-    }
-    String startVertex = graph.map.keySet().iterator().next();
-    visited.add(startVertex);
+  public static Graph<String,Float> primMst(Graph <String,Float> graph){
+    Graph<String, Float> mst = new Graph<>(false);
+    Set<String> visited = new HashMap<>(); 
 
-    for(String to : graph.map.get(startVertex).keySet()){
-      edgeQueue.add(to);
-    }
-
-    while(visited.size() < graph.map.size() && !edgeQueue.isEmpty()){
-      String vertex = edgeQueue.extracMin();
-
-      if(!visited.contains(vertex)) {
-        mst.addVertex(startVertex);
-        mst.addVertex(vertex);
-        Float weight = graph.map.get(startVertex).get(vertex);
-        mst.addEdge(startVertex,vertex,weight);
-        visited.add(vertex);
-        
-        for(String to : graph.map.get(vertex).keySet()){
-          if(!visited.contains(to)){
-            edgeQueue.add(to);
-          }
-        }
-
-      }  
+    for(String edge: graph.){
       
     }
-    return mst;
   }
-
 
 }
