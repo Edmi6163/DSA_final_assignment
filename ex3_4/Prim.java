@@ -72,7 +72,7 @@ public class Prim {
     if (graph == null || graph.getVertexNum() == 0) {
       throw new GraphException("Graph is empty");
     }
-    Graph<String, Double> mst = new Graph<>(false, true);
+    Graph<String, Double> mst = new Graph<>(true, true);
     Set<String> visited = new HashSet<>();
     Map<String, Key> keys = new HashMap<>();
 
