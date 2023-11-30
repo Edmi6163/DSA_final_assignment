@@ -1,6 +1,13 @@
 #include "common.h"
 
-// generic merge function
+/**
+ * Generic merge function used by merge sort.
+ * @param array The array to be sorted.
+ * @param mid The index of the middle element.
+ * @param right The index of the rightmost element.
+ * @param size The size of each element in the array.
+ * @param compare The comparison function used to compare two elements.
+ */
 void merge(void *array, size_t mid, size_t right, size_t size,
            int (*compare)(const void *, const void *)) {
 
@@ -96,7 +103,7 @@ void merge_binary_insertion_sort(void *array, size_t nitems, size_t size,
 
   size_t mid = nitems / 2;
   merge_binary_insertion_sort(array, mid, size, k, compare);
-  merge_binary_insertion_sort(((char *)array) + mid * size, nitems - mid,
-                              size, k, compare);
+  merge_binary_insertion_sort(((char *)array) + mid * size, nitems - mid, size,
+                              k, compare);
   merge(array, mid, nitems, size, compare);
 }
