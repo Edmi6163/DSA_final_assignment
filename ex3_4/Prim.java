@@ -15,6 +15,13 @@ public class Prim {
   //1. read the graph from the csv file args[1]
   //2. calculate the minimum spanning forest with prim's algorithm
   //3. print the result to the console
+  
+  /**
+   * main function read the csv file and create the mst,
+   * print the number of vertices, edges and total of km
+   * calculated by the mst
+   * @param: args[0] must contain the csv file path
+   */
   public static void main(String[] args) throws GraphException {
     Graph<String,Double> graph = readCsv(args[0]);
     String firstVertex = graph.getVertices().iterator().next();
@@ -27,6 +34,11 @@ public class Prim {
     System.out.println("Total of km: " + calculateWeight(mst) + "km");
   }
 
+  /**
+   * read the csv file and create the graph
+   * @param path csv file path
+   * @return graph
+   */
   private static Graph<String, Double> readCsv(String path) {
     Graph<String, Double> graph = new Graph<>(false, true);
     try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
@@ -47,6 +59,13 @@ public class Prim {
     return graph;
   }
 
+  /**
+   * create the mst using the structure PriorityQueue
+   * @param graph graph created from the csv file 
+   * @param root first vertex of the graph
+   * @return the minumu spanning tree of the graph
+   * @throws GraphException
+   */
   private static Graph<String, Double> mst(Graph<String, Double> graph, String root) throws GraphException {
     if (graph == null || graph.getVertexNum() == 0) {
       throw new GraphException("Graph is empty");
@@ -93,6 +112,11 @@ public class Prim {
     return mst;
   }
 
+  /**
+   * calculate the total weight of the vertex of the graph
+   * @param graph
+   * @return
+   */
   public static double calculateWeight(Graph<String, Double> graph) {
     double weight = 0;
     for (String vertex : graph.getVertices()) {
