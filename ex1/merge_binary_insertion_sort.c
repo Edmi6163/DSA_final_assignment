@@ -72,7 +72,6 @@ void merge_sort(void *array, void *tmp, size_t left, size_t right, size_t size,
   merge_sort(array, tmp, left, middle, size, k, compare);
   merge_sort(array, tmp, middle + 1, right, size, k, compare);
 
-  // Merge the two subarrays only if they are out of order
   void *middle_element = (char *)array + middle * size;
   void *middle_plus_one_element = (char *)array + (middle + 1) * size;
   if (compare(middle_element, middle_plus_one_element) > 0) {

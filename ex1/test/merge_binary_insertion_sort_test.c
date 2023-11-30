@@ -1,4 +1,5 @@
 #include "../common.h"
+#define UNITY_DOUBLE_PRECISION
 #include "unity.h"
 #include "unity_internals.h"
 #include <assert.h>

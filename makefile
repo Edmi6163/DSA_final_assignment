@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -Wpedantic -Wall -Wextra -g
-ARGS = data/records.csv data/sorted.csv 15 3
+ARGS = data/records.csv data/sorted.csv 15 1
 
 all: lib test 
 
