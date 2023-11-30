@@ -75,7 +75,7 @@ public class Graph<V, E> {
         if(!containsVertex(vertex))
           return false;
 
-        int edgesRemoved = adjencyMap.get(a).size();
+        int edgesRemoved = adjencyMap.get(vertex).size();
         adjencyMap.remove(vertex);
         for(Map.Entry<V,Map<V,E>> entry : adjencyMap.entrySet()){
           entry.getValue().remove(vertex);

@@ -25,7 +25,7 @@ compileJava {
 }
 
 application {
-    mainClass = 'ex3_4.Prim'
+    mainClass = 'Prim'
 }
 
 test {

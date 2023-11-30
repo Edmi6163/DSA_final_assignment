@@ -20,18 +20,20 @@ public class Prim {
    * main function read the csv file and create the mst,
    * print the number of vertices, edges and total of km
    * calculated by the mst
-   * @param: args[0] must contain the csv file path
    */
   public static void main(String[] args) throws GraphException {
     Graph<String,Double> graph = readCsv(args[0]);
     String firstVertex = graph.getVertices().iterator().next();
 
+    long startTime = System.nanoTime();
     Graph<String,Double> mst = mst(graph, firstVertex);
+    long endTime = System.nanoTime();
 
     System.out.println("Number of vertices: " + mst.getVertexNum());
     System.out.println("Number of edges: " + mst.getEdgeNum());
 
-    System.out.println("Total of km: " + calculateWeight(mst) + "km");
+    System.out.printf("Total of km: %.3f km\n", calculateWeight(mst)/1000);
+    System.out.println("Time taken: " + (endTime - startTime) / 1_000_000_000.0 + " seconds");
   }
 
   /**
@@ -114,10 +116,10 @@ public class Prim {
 
   /**
    * calculate the total weight of the vertex of the graph
-   * @param graph
-   * @return
+   * @param graph the graph created from the csv file
+   * @return the total weight of the graph, aka the total of km
    */
-  public static double calculateWeight(Graph<String, Double> graph) {
+  public static double calculateWeight(Graph<String, Double> graph) throws GraphException {
     double weight = 0;
     for (String vertex : graph.getVertices()) {
       for (String neighbor : graph.getNeighbours(vertex)) {
