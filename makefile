@@ -1,5 +1,6 @@
 CC = gcc
 CFLAGS = -Wpedantic -Wall -Wextra -g
+TESTFLAGS = -DUNITY_INCLUDE_DOUBLE -DUNITY_OUTPUT_COLOR
 ARGS = data/records.csv data/sorted.csv 15 1
 
 all: lib test 
@@ -28,7 +29,7 @@ dump:
 	./build/main_ex1 $(ARGS) >> log.log
 
 test:
-	$(CC) $(CFLAGS) ex1/merge_binary_insertion_sort.c ex1/test/generic_comparable.c ex1/test/unity.c ex1/test/merge_binary_insertion_sort_test.c -o build/test
+	$(CC) $(CFLAGS) $(TESTFLAGS) ex1/merge_binary_insertion_sort.c ex1/test/generic_comparable.c ex1/test/unity.c ex1/test/merge_binary_insertion_sort_test.c -o build/test
 
 run_test:
 	./build/test
