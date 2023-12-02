@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS= -Wpedantic -Wall -Wextra -g -std=c17
+CFLAGS= -Wpedantic -Wall -Wextra -g -std=c11
 ARGS= input/dictionary.txt  input/correctme.txt
 
 quick: clean all
@@ -8,7 +8,7 @@ all: libs test
 
 libs:
 	mkdir ex2/build/
-	$(CC) $(CFLAGS)  ex2/skip_list.c ex2/main.c -o ex2/build/main_ex2
+	$(CC) $(CFLAGS) ex2/skip_list.c ex2/main.c -o ex2/build/main_ex2
 
 run:
 	./ex2/build/main_ex2 $(ARGS) 
