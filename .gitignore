@@ -9,3 +9,10 @@ valgrind.log.core.*
 inputFile/**
 gradle/**
 .gradle/**
+
+
+# LaTeX intermediate files
+*.aux
+*.log
+*.toc
+

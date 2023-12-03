@@ -8,6 +8,7 @@ void sort_records(const char *infile, const char *outfile, size_t k, size_t fiel
   clock_t start, end;
   FILE *file_in = fopen(infile, "r");
   struct Records *array = create_array(file_in, &nitems);
+  fclose(file_in);
   printf("array created without errors\n");
    switch (field)
   {
@@ -42,7 +43,6 @@ void sort_records(const char *infile, const char *outfile, size_t k, size_t fiel
     fprintf(f_out,"%d,%s,%d,%lf\n",array[i].eId,array[i].field1,array[i].field2,array[i].field3);
   }
   fclose(f_out);
-  fclose(file_in);
   free(array); 
 }
 

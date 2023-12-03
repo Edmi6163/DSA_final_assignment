@@ -7,7 +7,7 @@ all: lib test
 
 all_dbg: lib dump
 
-run_all: test run
+run_all: run_test run
 
 lib:
 	$(CC) $(CFLAGS)  merge_binary_insertion_sort.c main.c comparable.c csvReader.c -o build/main_ex1
@@ -31,7 +31,7 @@ test:
 	$(CC) $(CFLAGS) $(TESTFLAGS)  merge_binary_insertion_sort.c test/merge_binary_insertion_sort_test.c test/generic_comparable.c test/unity.c -o build/merge_binary_insertion_sort_test
 
 run_test:
-	./build/test
+	./build/merge_binary_insertion_sort_test
 
 clean:
 	rm -r build/*
