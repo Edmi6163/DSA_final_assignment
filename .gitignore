@@ -4,6 +4,7 @@ build/**
 log.log
 input/**
 ex2/build/**
+ex1/build/**
 valgrind.log.core.*
 inputFile/**
 gradle/**
