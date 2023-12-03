@@ -1,8 +1,10 @@
 data/**
 .vscode/**
-input/**
 build/**
-.gradle/**
+log.log
+input/**
 ex2/build/**
-gradle/**
+valgrind.log.core.*
 inputFile/**
+gradle/**
+.gradle/**
