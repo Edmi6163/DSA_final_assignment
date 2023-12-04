@@ -2,9 +2,16 @@ data/**
 .vscode/**
 input/**
 ex2/build/**
+ex1/build/**
 inputFile/**
 .gradle/**
 build/**
 gradle/**
 valgrind.log
 valgrind.log.*
+
+
+# LaTeX file
+*.aux
+*.log
+*.toc
