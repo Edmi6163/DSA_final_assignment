@@ -5,14 +5,15 @@ log.log
 input/**
 ex2/build/**
 ex1/build/**
-valgrind.log.core.*
 inputFile/**
-gradle/**
 .gradle/**
+build/**
+gradle/**
+valgrind.log
+valgrind.log.*
 
 
-# LaTeX intermediate files
+# LaTeX file
 *.aux
 *.log
 *.toc
-
