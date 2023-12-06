@@ -88,7 +88,7 @@ void merge_sort(void *array, void *tmp, size_t left, size_t right, size_t size,
   }
 }
 
-void merge_binary_insertion_sort(void *array, size_t nitems, size_t size,
+void merge_binary_insertion_sort(void *base, size_t nitems, size_t size,
                                  size_t k,
                                  int (*compare)(const void *, const void *)) {
 
@@ -97,13 +97,13 @@ void merge_binary_insertion_sort(void *array, size_t nitems, size_t size,
   }
 
   if (nitems <= k) {
-    binary_insertion_sort(array, nitems, size, compare);
+    binary_insertion_sort(base, nitems, size, compare);
     return;
   }
 
   size_t mid = nitems / 2;
-  merge_binary_insertion_sort(array, mid, size, k, compare);
-  merge_binary_insertion_sort(((char *)array) + mid * size, nitems - mid, size,
+  merge_binary_insertion_sort(base, mid, size, k, compare);
+  merge_binary_insertion_sort(((char *)base) + mid * size, nitems - mid, size,
                               k, compare);
-  merge(array, mid, nitems, size, compare);
+  merge(base, mid, nitems, size, compare);
 }
