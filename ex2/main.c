@@ -38,11 +38,11 @@ void reading_dictionary(const char *dictfile, struct _SkipList *list) {
 void find_errors(const char *dictfile, const char *textfile,size_t max_height) {
   struct _SkipList *list;
   clock_t begin, end;
+	char line[1024];
 	FILE *phrase = fopen(textfile,"r");
   new_skiplist(&list, max_height, compare_string);
   reading_dictionary(dictfile, list);
 
-	char line[1024];
 
   printf("looking for any errors .... \n");
 	while(fgets(line,sizeof(line),phrase)){

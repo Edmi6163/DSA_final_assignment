@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS= -Wpedantic -Wall -Wextra -g -std=c11
 TESTFLAG = -DUNITY_OUTPUT_COLOR
-ARGS= ../data/dictionary.txt  ../data/correctme.txt 16
+ARGS= ../data/dictionary.txt  ../data/correctme.txt 8
 
 quick: clean all
 
