@@ -10,12 +10,12 @@ void to_lowercase(char *str){
   }
 }
 
-void reading_dictionary(const char *dictfile, struct _SkipList *list) {
+void reading_dictionary(const char *dictfile, struct SkipList *list) {
 
   char buffer[MAXC];
   FILE *fp = fopen(dictfile, "r");
 
-  printf("Loading dictionary from file \x1b[33m%s\n\x1b[0m", dictfile);
+  // printf("Loading dictionary from file \x1b[33m%s\n\x1b[0m", dictfile);
   TEST_ERROR
 
   while (fgets(buffer, sizeof(buffer), fp)) {
@@ -29,14 +29,14 @@ void reading_dictionary(const char *dictfile, struct _SkipList *list) {
     }
     insert_skiplist(list, word_to_insert);
   }
-	printf("dictionary loaded\n");
+	// printf("dictionary loaded\n");
 
  
   fclose(fp);
 }
 
 void find_errors(const char *dictfile, const char *textfile,size_t max_height) {
-  struct _SkipList *list;
+  struct SkipList *list;
   clock_t begin, end;
 	char line[1024];
 	FILE *phrase = fopen(textfile,"r");
@@ -44,20 +44,21 @@ void find_errors(const char *dictfile, const char *textfile,size_t max_height) {
   reading_dictionary(dictfile, list);
 
 
-  printf("looking for any errors .... \n");
+  // printf("looking for any errors .... \n");
 	while(fgets(line,sizeof(line),phrase)){
 		char *token = strtok(line," \t\n\r.,;:!-");
 		while(token){
       to_lowercase(token); 
       begin = clock();
-			if(!search_skip_list(list,token)){
-      printf("The word \033[31m%s\033[0m was not found, so probably is written incorrectly\n",token);
+			if(!search_skiplist(list,token)){
+      // printf("The word \033[31m%s\033[0m was not found, so probably is written incorrectly\n",token);
 			}
       end = clock();
 			token = strtok(NULL, " \t\n\r.,;:!-");
 		}
 
-    printf("Time taken with max_height %zu is: %f seconds\n",max_height, (double)(end - begin) / CLOCKS_PER_SEC);
+    // printf("Time taken with max_height %zu is: %f seconds\n",max_height, (double)(end - begin) / CLOCKS_PER_SEC);
+    printf(" %f, %zu \n", (double)(end - begin) / CLOCKS_PER_SEC,max_height);
 		fclose(phrase);
 		clear_skiplist(&list);
 	}
@@ -70,8 +71,8 @@ int main(int argc, char **argv) {
 
   size_t max_height = strtoul(argv[3], NULL, 10);
 
-  printf(":::>dict path %s<::: \n", dict);
-  printf(":::>corr path %s<::: \n", corr);
+  // printf(":::>dict path %s<::: \n", dict);
+  // printf(":::>corr path %s<::: \n", corr);
 
   if (argc < 4)
     printf("not enough argument passed \n");
