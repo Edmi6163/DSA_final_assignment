@@ -34,9 +34,9 @@ struct Node *create_node(void *item, size_t size) {
  * @param max_height: max height of the list
  * @param compare: function to compare the items
  */
-void new_skiplist(struct _SkipList **list, size_t max_height,
+void new_skiplist(struct SkipList **list, size_t max_height,
                   int (*compare)(const void *, const void *)) {
-  *list = (struct _SkipList *)malloc(sizeof(struct _SkipList));
+  *list = (struct SkipList *)malloc(sizeof(struct SkipList));
   (*list)->max_height = max_height;
   (*list)->compare = compare;
   (*list)->head = (struct Node **)calloc(max_height, sizeof(struct Node *));
@@ -47,7 +47,7 @@ void new_skiplist(struct _SkipList **list, size_t max_height,
  * delete skip list
  * @param list: pointer to the list
  */
-void clear_skiplist(struct _SkipList **list) {
+void clear_skiplist(struct SkipList **list) {
   struct Node *current = (*list)->head[0];
   struct Node *temp;
 
@@ -68,7 +68,7 @@ void clear_skiplist(struct _SkipList **list) {
  * @param list: pointer to the list
  * @param item: item to insert in the skip list
  */
-void insert_skiplist(struct _SkipList *list, void *item) {
+void insert_skiplist(struct SkipList *list, void *item) {
   struct Node *new = create_node(item, random_level(list->max_height));
   if (new->size > list->max_level) {
     list->max_level = new->size;
@@ -91,7 +91,7 @@ void insert_skiplist(struct _SkipList *list, void *item) {
  * @param list: pointer to the list
  * @param item: item to search in the skip list
  */
-const void *search_skip_list(struct _SkipList *list, void *item) {
+const void *search_skiplist(struct SkipList *list, void *item) {
   struct Node **x = list->head;
 
   for (int i = list->max_level; i >= 1; i--) {

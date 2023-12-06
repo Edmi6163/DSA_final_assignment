@@ -21,7 +21,7 @@ struct Node {
   void *item;
 };
 
-struct _SkipList {
+struct SkipList {
   struct Node **head;
   size_t max_level;
   size_t max_height;
@@ -43,9 +43,9 @@ struct _SkipList {
 #endif
 
 //method prototypes
-const void *search_skip_list(struct _SkipList *list, void *item);
-void insert_skiplist(struct _SkipList *list,void *item);
-void clear_skiplist(struct _SkipList **list);
+const void *search_skiplist(struct SkipList *list, void *item);
+void insert_skiplist(struct SkipList *list,void *item);
+void clear_skiplist(struct SkipList **list);
 int compare_string(const void* a, const void* b);
 void free_string(void *a);
-void new_skiplist(struct _SkipList **list, size_t max_height, int (*compare)(const void *, const void *));
+void new_skiplist(struct SkipList **list, size_t max_height, int (*compare)(const void *, const void *));
