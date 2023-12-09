@@ -21,7 +21,7 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
 		this.indexMap = new HashMap<>();
 	}
 
-	private void heapifyUp(int index) {
+	public void heapifyUp(int index) {
 		while (index > 0) {
 			int parentIndex = (index - 1) / 2;
 			if (comparator.compare(queue.get(parentIndex), queue.get(index)) <= 0) {
@@ -32,7 +32,7 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
 		}
 	}
 
-	private void heapifyDown(int index) {
+	public void heapifyDown(int index) {
 		int leftChildIndex = index * 2 + 1;
 		int rightChildIndex = index * 2 + 2;
 

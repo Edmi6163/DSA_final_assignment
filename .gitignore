@@ -4,6 +4,10 @@ ex2/build/**
 lib/**
 inputFile/**
 build/**
+*.aux
+*.log
+*.toc
+error.txt
 # Ignore Gradle project-specific cache directory
 .gradle
 

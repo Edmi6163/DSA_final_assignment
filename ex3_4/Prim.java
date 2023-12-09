@@ -68,11 +68,11 @@ public class Prim {
    * @return the minumu spanning tree of the graph
    * @throws GraphException
    */
-  private static Graph<String, Double> mst(Graph<String, Double> graph, String root) throws GraphException {
+  public static Graph<String, Double> mst(Graph<String, Double> graph, String root) throws GraphException {
     if (graph == null || graph.getVertexNum() == 0) {
       throw new GraphException("Graph is empty");
     }
-    Graph<String, Double> mst = new Graph<>(true, true);
+    Graph<String, Double> mst = new Graph<>(false, true);
     Set<String> visited = new HashSet<>();
     Map<String, Key> keys = new HashMap<>();
 
