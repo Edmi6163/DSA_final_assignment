@@ -12,6 +12,7 @@ gradle/**
 valgrind.log
 valgrind.log.*
 output.txt
+error.txt
 
 
 # LaTeX file

@@ -3,12 +3,12 @@
 
 
 void sort_records(const char *infile, const char *outfile, size_t k, size_t field){
-  printf("creating array\n");
+  // printf("creating array\n");
   int nitems;
   clock_t start, end;
   FILE *file_in = fopen(infile, "r");
   struct Records *array = create_array(file_in, &nitems);
-  printf("array created without errors\n");
+  // printf("array created without errors\n");
    switch (field)
   {
   case 1:
@@ -31,7 +31,8 @@ void sort_records(const char *infile, const char *outfile, size_t k, size_t fiel
     exit(EXIT_FAILURE);
   }
   // printf("Array sorted in \x1b[35m%lf\x1b[0m  seconds with k: \x1b[35m%zu\x1b[0m\n", (double)(end-start)/CLOCKS_PER_SEC,k);
-  printf("%lf,%zu", (double)(end-start)/CLOCKS_PER_SEC,k);
+  printf("%lf,%zu\n", (double)(end-start)/CLOCKS_PER_SEC,k);
+  // printf("%lf,%zu", (double)(end-start)/CLOCKS_PER_SEC,k);
 
   FILE *f_out = fopen(outfile, "w");
   if(f_out == NULL){
