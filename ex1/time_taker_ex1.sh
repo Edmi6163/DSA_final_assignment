@@ -5,8 +5,8 @@ ALGORITHM_EXECUTABLE="./build/main_ex1 ../data/records.csv ../data/sorted.csv"
 
 # Specify the range of max heights you want to test
 MIN_K_VALUE=1
-MAX_K_VALUE=750
-INCREMENT=250
+MAX_K_VALUE=300
+INCREMENT=100
 FIELD=1
 
 # Counter for segmentation faults
@@ -19,6 +19,7 @@ for ((k = $MIN_K_VALUE; k <= $MAX_K_VALUE; k++)); do
     if [ $((k % INCREMENT)) -eq 0 ]; then
         echo "Incrementing FIELD value"
         ((FIELD++))
+        k = 1
     fi
 
     # Display the temporary output in the terminal

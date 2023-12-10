@@ -30,8 +30,18 @@ void sort_records(const char *infile, const char *outfile, size_t k, size_t fiel
     printf("Invalid field\n");
     exit(EXIT_FAILURE);
   }
-  // printf("Array sorted in \x1b[35m%lf\x1b[0m  seconds with k: \x1b[35m%zu\x1b[0m\n", (double)(end-start)/CLOCKS_PER_SEC,k);
-  printf("%lf,%zu\n", (double)(end-start)/CLOCKS_PER_SEC,k);
+  printf("Array sorted in \x1b[35m%lf\x1b[0m  seconds with k: \x1b[35m%zu\x1b[0m\n", (double)(end-start)/CLOCKS_PER_SEC,k);
+  /* TODO remove this, just to have time on file
+  FILE *time_file = fopen("time.txt", "a");  // Corrected mode to "w"
+if (time_file == NULL) {
+    fprintf(stderr, "Error opening time file\n");
+    free(array);
+    exit(EXIT_FAILURE);
+}
+fprintf(time_file, "%lf,%zu\n", (double)(end - start) / CLOCKS_PER_SEC, k);
+fclose(time_file);
+*/
+
   // printf("%lf,%zu", (double)(end-start)/CLOCKS_PER_SEC,k);
 
   FILE *f_out = fopen(outfile, "w");

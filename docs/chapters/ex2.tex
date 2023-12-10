@@ -2,7 +2,7 @@
 The purpose of this chapter is to report the tests that have been done to find the best value of \underline{height} in a Skip List.
 Skip List is a probabilistic data structure that allows searching, insertion and deleting operation with time complexity of $O(log n)$.
 
-\section{Testing methodology\footnote{all test are done on a Lenovo Thinkpad x390 yoga with an Intel Core i7-8565U CPU and 16GB of RAM, with Arch Linux installed as only OS}}
+\section{Testing methodology}
 I wrote a bash script\footnote{Included in the repo,the name is \textbf{time\_taker\_ex2.sh}} that runs the program with different values of \underline{height} and saves the output in a file, the range of tested level is between 6 and 50
 \newline
 \begin{figure}[H]
@@ -131,6 +131,8 @@ I wrote a bash script\footnote{Included in the repo,the name is \textbf{time\_ta
 
 \newline
 Range from 1 to 5 is omitted because the algorithm did not terminate for those values
+\footnote{all test are done on a Lenovo Thinkpad x390 yoga with an Intel Core i7-8565U CPU and 16GB of RAM, with Arch Linux installed as only OS}
+
 
 \section{Conclusion based on the analysis}
 Looking the graph the best values is between 15 and 20, because this range is the good balance between the time used to search the words in the skip list and the memory used. 
