@@ -1,0 +1,39 @@
+\section{Intdoduction}
+Prim's algorithm is a greedy algorithm that finds a minimum spanning tree for a weighted undirected graph. This means it finds a subset of the edges that forms a tree that includes every vertex, where the total weight of all the edges in the tree is minimized. 
+the algorithm starts from an aribitray vertex and iteratively adds new vertices and edges to the tree. It terminates when all vertices are included in the tree.
+
+\section{Supporting classes}
+There are three classes used in this Implementation of Prim's algorithm:
+\begin{itemize}
+  \item Graph
+  \item Key
+  \item PriiorityQueue
+\end{itemize}
+
+In this report is possible to read about PriorityQueue in previous chapter, so we will focus on Graph and Key classes.
+
+\subsection{Graph}
+Graph class is utilized to represent a graph data structure. In the excercise is used to represent the input graph and the resulting MST.
+The implementation use an AdjencyMap that stores vertices and edges.
+
+\subsection{Key}
+Key class is used to represent the information of vertex associated with the MST during the execution of Prim's algorithm. It contains the vertex identifier and, the key value and parent vertex in the MST. The class key allows tracking of the contruction process and determining the next node to be addes to the MST.
+The Key object is stored in the PriorityQueue.
+
+\section{Algorithm Implementation}
+Prim's algorithm follow this main steps:
+\begin{enumerate}
+  \item Read the input of the csv file passed as argument and create the graph from it.
+  \item Initialize the PriorityQueue with the Keys of the vertices of the graph.
+  \item Set the key of the starting potin to 0 and populate the PriorityQueue.
+  \item Iteratively operate the following steps while the PriorityQueue is not empty:
+  \begin{enumerate}
+    \item Extract the vertex with the minimum key from the PriorityQueue.
+    \item Add this vertex to the MST.
+    \item Update the key for all neighbors of the extracted vertex that are still in the PriorityQueue, so that are not already visited.
+  \end{enumerate}
+  \item Calculate and print the total weight of the MST, number of vertices and edges created, and execution time.
+\end{enumerate}
+
+\section{Conclusion}
+All the implementation of the MST is around three main components that are the classes Graph, Key and PriorityQuue. 
