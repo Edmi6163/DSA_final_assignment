@@ -19,6 +19,11 @@ public class Prim {
    * calculated by the mst
    */
   public static void main(String[] args) throws GraphException {
+
+    if(args.length != 1) {
+      System.out.println("Usage: java <Exec> <csv file>");
+      System.exit(1);
+    }
     Graph<String,Double> graph = readCsv(args[0]);
     String firstVertex = graph.getVertices().iterator().next();
 
@@ -29,7 +34,7 @@ public class Prim {
     System.out.println("Number of vertices: " + mst.getVertexNum());
     System.out.println("Number of edges: " + mst.getEdgeNum());
 
-    System.out.printf("Total of km: %.3f km\n", calculateWeight(mst)/1000);
+    System.out.println("Total of km: " + calculateWeight(mst)/1000 + " km");
     System.out.println("Time taken: " + ((endTime - startTime)/1000) + " seconds");
   }
 
@@ -123,4 +128,6 @@ public class Prim {
       }
     return weight / 2;
   }
+
+
 }
