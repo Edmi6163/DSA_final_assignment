@@ -1,0 +1,40 @@
+plugins {
+    id 'application'
+    id 'java'
+    id 'com.adarshr.test-logger' version '3.2.0'
+}
+
+sourceSets {
+    main {
+        java.srcDirs = ['src/main/java']
+    }
+    test {
+        java.srcDirs = ['src/test/java']
+    }
+}
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'junit:junit:4.13.2'
+}
+
+compileJava {
+    sourceCompatibility = '20'
+}
+
+application {
+    mainClass = 'ex3_4.Prim'
+}
+
+test {
+    useJUnit()
+    testLogging {
+        events 'PASSED', 'FAILED','SKIPPED'
+    }
+}
+
+run { // run task with arguments: -q --console=plain
+    standardInput = System.in
+}

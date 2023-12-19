@@ -1,0 +1,25 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Prim",
+      "request": "launch",
+      "mainClass": "Prim",
+      "projectName": "laboratorio-algoritmi-2022-2023"
+    },
+    {
+      "type": "java",
+      "name": "Prim",
+      "request": "launch",
+      "mainClass": "ex3_4.Prim",
+      "projectName": "laboratorio-algoritmi-2022-2023_72a7227",
+      "args": [
+        "./inputFile/italian_dist_graph.csv"
+      ]
+    }
+  ]
+}
