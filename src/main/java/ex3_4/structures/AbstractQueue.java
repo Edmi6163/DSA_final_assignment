@@ -1,4 +1,4 @@
-package structures;
+package ex3_4.structures;
 
 public interface AbstractQueue<E> {
   public boolean empty();

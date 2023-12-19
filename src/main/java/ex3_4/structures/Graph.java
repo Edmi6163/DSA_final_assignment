@@ -1,4 +1,4 @@
-package structures;
+package ex3_4.structures;
 
 import java.util.AbstractCollection;
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ import ex3_4.structures.Edge;
  * @param <V> the type of the vertices
  * @param <E> the type of the edges
  */
-public class Graph<V, E> {
+public class Graph<V, E> implements AbstractGraph<V, E> {
   private final boolean directed;
   private final boolean weighted;
   private final Map<V, Map<V,E>> adjencyMap;
@@ -134,7 +134,7 @@ public class Graph<V, E> {
 
    }
 
-   public E getWeight(V a,V b) throws GraphException {
+   public E getWeight(V a,V b){
     if(!containsEdge(a,b))
       return null;
     return adjencyMap.get(a).get(b);

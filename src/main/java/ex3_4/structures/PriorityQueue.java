@@ -1,6 +1,6 @@
-package structures;
-import exceptions.*;
-import structures.AbstractQueue;
+package ex3_4.structures;
+import ex3_4.exceptions.*;
+import ex3_4.structures.AbstractQueue;
 
 import java.util.Collection;
 import java.util.Comparator;

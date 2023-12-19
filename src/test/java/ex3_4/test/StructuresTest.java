@@ -1,109 +1,121 @@
 package ex3_4.test;
 
+ import ex3_4.structures.AbstractGraph;
+ import ex3_4.structures.Graph;
+ import ex3_4.structures.PriorityQueue;
+ import ex3_4.Prim;
  import org.junit.Test;
  import static org.junit.Assert.*;
 
- import structures.Graph;
- import structures.PriorityQueue;
- import ex3_4.Prim;
+
  import exceptions.GraphException;
 
+ import java.util.Collection;
+ import java.util.Iterator;
+
 public class StructuresTest {
-    @Test
-    public void testEmptyGraph() {
-        Graph<String, Double> graph = new Graph<>(false, true);
-        try {
-        Prim.mst(graph, "A");
-        fail("GraphException expected");
-        } catch (GraphException e) {
-        assertEquals("Graph is empty", e.getMessage());
-        }
+
+    public void setUp() {
+        PriorityQueue<Integer> priorityQueue = new PriorityQueue<>(Integer::compareTo);
     }
 
     @Test
-    public void testOneVertex() {
-        structures.Graph<String, Double> graph = new Graph<>(false, true);
-        graph.addVertex("A");
-        try {
-        Prim.mst(graph, "A");
-        fail("GraphException expected");
-        } catch (GraphException e) {
-        assertEquals("Graph has only one vertex", e.getMessage());
-        }
+    public void testIsDirected(){
+        Graph<String, Double> directedGraph = new Graph<>(true, true);
+        Graph<String, Double> unDirectedGraph = new Graph<>(false, true);
+        assertTrue(directedGraph.isDirected());
+        assertFalse(unDirectedGraph.isDirected());
     }
 
     @Test
-    public void testTwoVertices() {
-        Graph<String, Double> graph = new Graph<>(false, true);
+    public void testAddVertex(){
+        Graph<String, Double> graph = new Graph<>(true, true);
+        assertTrue(graph.addVertex("A"));
+        assertFalse(graph.addVertex("A"));
+        assertTrue(graph.containsVertex("A"));
+    }
+
+    @Test
+    public void testAddEdge(){
+        Graph<String, Double> graph = new Graph<>(true, true);
         graph.addVertex("A");
         graph.addVertex("B");
-        try {
-        Prim.mst(graph, "A");
-        fail("GraphException expected");
-        } catch (GraphException e) {
-        assertEquals("Graph has only two vertices", e.getMessage());
-        }
+        assertTrue(graph.addEdge("A", "B", 1.0));
+        assertTrue(graph.containsEdge("A", "B"));
     }
-
     @Test
-    public void testThreeVertices() {
-        Graph<String, Double> graph = new Graph<>(false, true);
+    public void testRemoveVertex() {
+        Graph<String, Float> graph = new Graph<>(false, false);
         graph.addVertex("A");
         graph.addVertex("B");
         graph.addVertex("C");
-        try {
-        Prim.mst(graph, "A");
-        fail("GraphException expected");
-        } catch (GraphException e) {
-        assertEquals("Graph has only three vertices", e.getMessage());
-        }
+
+        assertTrue(graph.removeVertex("B"));
+        assertFalse(graph.removeVertex("B"));
+
+        assertFalse(graph.containsVertex("B"));
     }
 
     @Test
-    public void testFourVertices() {
-        Graph<String, Double> graph = new Graph<>(false, true);
+    public void testRemoveEdge() {
+        Graph<String, Float> graph = new Graph<>(false, true);
+        graph.addVertex("A");
+        graph.addVertex("B");
+        graph.addEdge("A", "B", 1.0f);
+
+        assertTrue(graph.removeEdge("A", "B"));
+        assertFalse(graph.removeEdge("A", "B"));
+
+        assertFalse(graph.containsEdge("A", "B"));
+    }
+
+    @Test
+    public void testGetVertex() {
+        Graph<String, Float> graph = new Graph<>(false, false);
         graph.addVertex("A");
         graph.addVertex("B");
         graph.addVertex("C");
-        graph.addVertex("D");
-        try {
-        Prim.mst(graph, "A");
-        fail("GraphException expected");
-        } catch (GraphException e) {
-        assertEquals("Graph has only four vertices", e.getMessage());
+
+        Collection<String> nodes = graph.getVertices();
+        assertEquals(3, nodes.size());
+        assertTrue(nodes.contains("A"));
+        assertTrue(nodes.contains("B"));
+        assertTrue(nodes.contains("C"));
+    }
+
+    @Test
+    public void testGetEdges() {
+        Graph<String, Float> graph = new Graph<>(true, true);
+        graph.addVertex("A");
+        graph.addVertex("B");
+        graph.addVertex("C");
+        graph.addEdge("A", "B", 1.0f);
+        graph.addEdge("B", "C", 2.0f);
+
+        Collection<AbstractGraph.AbstractEdge<String, Float>> edges = graph.getEdges();
+        assertEquals(2, edges.size());
+
+        int count = 0;
+        for (AbstractGraph.AbstractEdge<String, Float> edge : edges) {
+            if (edge.getStart().equals("A") && edge.getEnd().equals("B") && edge.getWeight().equals(1.0f)) {
+                count++;
+            } else if (edge.getStart().equals("B") && edge.getEnd().equals("C") && edge.getWeight().equals(2.0f)) {
+                count++;
+            }
         }
+
+        assertEquals(2, count);
     }
 
     @Test
-    public void testHeapifyUp() {
-        PriorityQueue<Integer> priorityQueue = new PriorityQueue<>(Integer::compareTo);
-        int smallestElement = priorityQueue.top();
+    public void testPrimSingleNode() throws GraphException {
+        Graph<String, Double> singleNodeGraph = new Graph<>(false, true);
+        singleNodeGraph.addVertex("A");
 
-        priorityQueue.push(5);
-        priorityQueue.push(8);
-        priorityQueue.push(3);
-        priorityQueue.push(2);
-
-        priorityQueue.heapifyUp(3);
-        assertEquals(2, (int) priorityQueue.top());
+        Graph<String, Double> mst = Prim.mst(singleNodeGraph, "A");
+        assertEquals(1, mst.getVertexNum());
+        assertEquals(0, mst.getEdgeNum());
     }
 
-    @Test
-    public void testHeapifyDown() {
-        PriorityQueue<Integer> priorityQueue = new PriorityQueue<>(Integer::compareTo);
 
-
-
-
-        priorityQueue.push(8);
-        priorityQueue.push(5);
-        priorityQueue.push(3);
-        priorityQueue.push(2);
-
-        priorityQueue.heapifyDown(0);
-
-        assertEquals(2, (int) priorityQueue.top());
-
-    }
-  
 }

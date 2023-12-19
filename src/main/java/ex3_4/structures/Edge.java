@@ -1,9 +1,8 @@
 package ex3_4.structures;
 
-import structures.AbstractEdge;
-import structures.AbstractQueue;
+import ex3_4.structures. AbstractGraph;
 
-public class Edge<V,E> implements AbstractEdge<V,E> {
+public class Edge<V,E> implements AbstractGraph.AbstractEdge<V,E> {
   private final V start;
   private final V end;
   private final E weight;

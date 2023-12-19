@@ -1,22 +1,20 @@
 package ex3_4;
-
+import ex3_4.structures.AbstractGraph;
+import ex3_4.structures.Graph;
 import exceptions.GraphException;
-import structures.AbstractEdge;
-import structures.Graph;
 import structures.Key;
-import structures.PriorityQueue;
+import ex3_4.structures.PriorityQueue;
 
 import java.io.*;
 import java.util.*;
 
 public class Prim {
-  public static Graph<String, Float> graph;
 
 
   /**
-   * main function read the csv file and create the mst,
-   * print the number of vertices, edges and total of km
-   * calculated by the mst
+   * read the csv file, generate the mst and print the results
+   * @param args user must provide the csv file path
+   * @throws GraphException
    */
   public static void main(String[] args) throws GraphException {
 
@@ -121,12 +119,12 @@ public class Prim {
    * @param graph the graph created from the csv file
    * @return the total weight of the graph, aka the total of km
    */
-  public static double calculateWeight(Graph<String, Double> graph) throws GraphException {
+  public static double calculateWeight(Graph<String, Double> graph){
     double weight = 0;
-    for (AbstractEdge<String,Double> edge : graph.getEdges()) {
-        weight += edge.getWeight();
-      }
-    return weight / 2;
+    for(AbstractGraph.AbstractEdge<String, Double> edge : graph.getEdges()) {
+      weight += edge.getWeight();
+    }
+    return weight/2;
   }
 
 
