@@ -8,8 +8,7 @@ ex1/build/**
 inputFile/**
 .gradle/**
 build/**
-gradle/**
-valgrind.log
+gradle/** valgrind.log
 valgrind.log.*
 output.txt
 error.txt
@@ -36,3 +35,4 @@ error.txt
 build
 gradle/**
 .idea/**
+bin/**
